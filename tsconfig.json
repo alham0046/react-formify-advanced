@@ -1,0 +1,30 @@
+// tsconfig.json
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "ESNext",
+    "moduleResolution": "bundler", // or "node" (see below)
+    "jsx": "react-jsx",
+    "declaration": true,
+    "emitDeclarationOnly": false,
+    "allowSyntheticDefaultImports": true,
+    "ignoreDeprecations": "6.0", // 👈 Silences the baseUrl warning
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "outDir": "dist",
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ]
+    },
+    "types": [
+      "react",
+      "node"
+    ]
+  },
+  "include": [
+    "src",
+    "src/**/*.d.ts"
+  ]
+}

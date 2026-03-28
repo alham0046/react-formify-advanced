@@ -1,0 +1,52 @@
+.rt-container {
+  position: relative;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.rt-track {
+  display: inline-flex;
+  gap: 3rem;
+  width: max-content;
+  transform: translateX(0);
+  transition: transform 0.6s ease-out;
+}
+
+.rt-duplicate {
+  display: none;
+}
+
+.rt-overflow .rt-track .rt-duplicate {
+  display: block;
+}
+
+/* show ellipsis when not hovered */
+.rt-overflow:not(:hover)::after {
+  content: "...";
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+  padding-left: 1rem;
+  background: linear-gradient(to right, transparent, white 60%);
+}
+
+/* animate on hover */
+.rt-overflow:hover .rt-track {
+  animation: rt-scroll var(--rt-speed, 10s) linear infinite;
+}
+
+/* smooth return when hover ends */
+.rt-overflow:not(:hover) .rt-track {
+  animation: none;
+  transform: translateX(0);
+}
+
+@keyframes rt-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(var(--rt-distance));
+  }
+}

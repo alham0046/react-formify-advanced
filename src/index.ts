@@ -13,5 +13,6 @@ export {default as SearchInput} from './components/SearchInput'
 export { default as SubmitButton, type ConfirmationRenderProps, type SubmitButtonRef } from './components/SubmitButton';
 export { default as InputContainer } from './components/InputContainer';
 export type {OnSubmit} from './typeDeclaration/inputProps'
+export type {OnBlur, OnEnterPress, OnInputChange} from './typeDeclaration/baseProps'
 export {sharedMemory} from './store/sharedMemory'
 export {clearForm, formGlobalAction, resetForm, setEditData, setFieldValue} from './Utils/GlobalFromAction'

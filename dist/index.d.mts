@@ -160,7 +160,6 @@ type AutoInputProps = Omit<FullAutoInputProps, "sharedStyles" | "bgColor" | "onI
 declare const MemoizedAutoInput: React__default.NamedExoticComponent<AutoInputProps>;
 
 interface DateProps extends InputProps {
-    onDateSelect?: (date: string) => void;
     defaultTodayDate?: boolean;
     defaultDate?: DateString;
 }
@@ -283,4 +282,4 @@ declare const formGlobalAction: (formId: string) => {
     clearForm: () => void;
 };
 
-export { _default$3 as ArrayContainer, MemoizedAutoInput as AutoInput, type ConfirmationRenderProps, memoizedDateInput as DateInput, MemoizedDisabledInput as DisabledInput, _default$2 as FormRow, _default as InputContainer, MemoizedNumInput as NumInput, MemoizedObjectContainer as ObjectContainer, type OnSubmit, _default$1 as SearchInput, MemoizedSelectInput as SelectInput, MemoizedStrInput as StrInput, MemoizedSubmitButton as SubmitButton, type SubmitButtonRef, clearForm, formGlobalAction, resetForm, setEditData, setFieldValue, sharedMemory };
+export { _default$3 as ArrayContainer, MemoizedAutoInput as AutoInput, type ConfirmationRenderProps, memoizedDateInput as DateInput, MemoizedDisabledInput as DisabledInput, _default$2 as FormRow, _default as InputContainer, MemoizedNumInput as NumInput, MemoizedObjectContainer as ObjectContainer, type OnBlur, type OnEnterPress, type OnInputChange, type OnSubmit, _default$1 as SearchInput, MemoizedSelectInput as SelectInput, MemoizedStrInput as StrInput, MemoizedSubmitButton as SubmitButton, type SubmitButtonRef, clearForm, formGlobalAction, resetForm, setEditData, setFieldValue, sharedMemory };

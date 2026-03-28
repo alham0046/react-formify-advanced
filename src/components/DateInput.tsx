@@ -9,40 +9,14 @@ import Input from './Input';
 import { useContainerContext } from '../context/ContainerContext';
 import { useStyles } from '../hooks/useStylingMods';
 
-// type DateSelection = 
-//   | { defaultTodayDate: boolean; defaultDate?: never }
-//   | { defaultDate: DateString; defaultTodayDate?: never }
-//   | { defaultTodayDate?: never; defaultDate?: never }; // Allows neither to be passed
-
-// interface DatePropsBase extends InputProps {
-//     onDateSelect?: (date: string) => void;
-// }
-
-// type DateProps = DatePropsBase & DateSelection;
-
 interface DateProps extends InputProps {
-    onDateSelect?: (date: string) => void
     defaultTodayDate?: boolean
     defaultDate?: DateString
 }
-// interface DateBase extends InputProps {
-//     onDateSelect?: (date: string) => void
-// }
-
-// interface TodayProp extends DateBase {
-//     defaultTodayDate?: boolean
-// }
-
-// interface DefaultDateProp extends DateBase {
-//     defaultDate?: DateString
-// }
-
-// type DateProps = TodayProp | DefaultDateProp
 
 const DateInput = forwardRef<InputRefProps, DateProps>(({
     placeholder,
-    onDateSelect,
-    // onEnterPress = () => { },
+    onChange,
     children,
     defaultTodayDate = true,
     disabled = false,
@@ -56,8 +30,6 @@ const DateInput = forwardRef<InputRefProps, DateProps>(({
     const { inputStore } = useContainerContext()
     const todayDate = new Date().toISOString().split('T')[0]
 
-    console.log('the today date is', todayDate)
-
     const initialDate = defaultTodayDate ? todayDate : defaultDate ?? ""
     useEffect(() => {
         handleInitialValue(modifiedName, initialDate, inputStore)
@@ -69,11 +41,7 @@ const DateInput = forwardRef<InputRefProps, DateProps>(({
     const handleDateSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
         const newDate = e.target.value;
         inputStore.setValue(modifiedName, newDate)
-        // (props as FullInputProps).onInputChange(name!, newDate)
-        onDateSelect?.(newDate)
     };
-
-    // const value = useInputStore(modifiedName) ?? ""
 
     const disabledValue: boolean = useComputedExpression(disabled)
 
@@ -83,7 +51,6 @@ const DateInput = forwardRef<InputRefProps, DateProps>(({
 
     return (
         <div className={`relative ${tw.twContainerStyles}`} style={{...containerStyles, width: boxWidth}} /* style={{ display: hiddenValue ? 'none' : 'block', position : 'relative' }} */>
-            {/* {console.log('rendering StrInput', modifiedName)} */}
             <InputTemplate
                 name={modifiedName}
                 placeholder={placeholder}
@@ -100,7 +67,7 @@ const DateInput = forwardRef<InputRefProps, DateProps>(({
                     disabled={disabledValue}
                     type='date'
                     handleChange={handleDateSelect}
-                // {...rest}
+                    onChange={onChange}
                 />
             </InputTemplate>
             {children}

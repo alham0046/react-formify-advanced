@@ -1,10 +1,10 @@
 import { forwardRef, memo, useEffect, useImperativeHandle, useLayoutEffect, useRef, type ComponentProps } from 'react'
 import { useInputStore } from '../hooks/useInputStore'
-import type { InputRefProps, OnBlur, OnEnterPress, OnInputChange } from '../typeDeclaration/inputProps'
+import type { InputRefProps } from '../typeDeclaration/inputProps'
 import { FieldVisualState } from '../Config/FieldVisualState'
 import { useFormLayout } from '../context/LabelLayoutContext'
 import { useContainerContext } from '../context/ContainerContext'
-import { FieldProps } from '../typeDeclaration/baseProps'
+import { FieldProps, OnBlur, OnEnterPress, OnInputChange } from '../typeDeclaration/baseProps'
 
 type NonEnterKey = Exclude<React.KeyboardEvent<HTMLInputElement>['key'], 'Enter'>
 

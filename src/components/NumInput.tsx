@@ -1,6 +1,6 @@
 import React, { forwardRef, memo, useEffect } from 'react'
 // import { useInputStore } from '../../../Hooks/useInputStore'
-import { FieldProps, type InputProps, type InputRefProps } from "../typeDeclaration/inputProps";
+import { type InputProps, type InputRefProps } from "../typeDeclaration/inputProps";
 import { useComputedExpression } from "../hooks/useComputedExpression";
 import InputTemplate from "./InputTemplate";
 import { handleInitialValue } from '../Utils/setInitialValue';
@@ -8,6 +8,7 @@ import { useFieldName } from '../hooks/useFieldName';
 import Input from './Input';
 import { useContainerContext } from '../context/ContainerContext';
 import { useStyles } from '../hooks/useStylingMods';
+import { FieldProps } from '@/typeDeclaration/baseProps';
 
 interface NumInputProps extends InputProps {
     stringify?: boolean

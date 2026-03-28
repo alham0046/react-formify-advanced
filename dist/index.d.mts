@@ -43,7 +43,7 @@ interface BaseInputProps<T = {}, U = {}> {
     onEnterPress?: OnEnterPress;
     onBlur?: OnBlur;
     name?: string;
-    onChange?: OnInputChange$1;
+    onChange?: OnInputChange;
     onDisableChange?: (args: {
         state: boolean;
         disabledKey?: string;
@@ -52,21 +52,21 @@ interface BaseInputProps<T = {}, U = {}> {
         setValue: (value: any) => void;
     }) => void;
 }
-interface OnInputChangeArgs$1 {
+interface OnInputChangeArgs {
     value: string | number;
-    setValue: (field: FieldProps$1) => void;
+    setValue: (field: FieldProps) => void;
 }
-type OnInputChange$1 = (args: OnInputChangeArgs$1) => void;
-interface onEnterPressArgs extends OnInputChangeArgs$1 {
+type OnInputChange = (args: OnInputChangeArgs) => void;
+interface onEnterPressArgs extends OnInputChangeArgs {
     stopPropagation: () => void;
     data: Record<string, any>;
 }
 type OnEnterPress = (args: onEnterPressArgs) => void;
-interface OnBlurArgs extends OnInputChangeArgs$1 {
+interface OnBlurArgs extends OnInputChangeArgs {
     data: Record<string, any>;
 }
 type OnBlur = (args: OnBlurArgs) => void;
-interface FieldProps$1 {
+interface FieldProps {
     [key: string]: any;
 }
 
@@ -76,14 +76,6 @@ interface FullInputProps extends BaseInputProps {
     privacy?: boolean;
 }
 type InputProps = FullInputProps & Validation;
-interface OnInputChangeArgs {
-    value: string | number;
-    setValue: (field: FieldProps) => void;
-}
-interface FieldProps {
-    [key: string]: any;
-}
-type OnInputChange = (args: OnInputChangeArgs) => void;
 interface OnSubmitArgs {
     data: Record<string, any> | null;
     edited: Record<string, any> | null;
@@ -207,12 +199,6 @@ interface SearchInputProps<T> extends SearchInputBaseProps {
 }
 declare const _default$1: React$1.NamedExoticComponent<SearchInputProps<any> & React$1.RefAttributes<InputRefProps>>;
 
-type SubmitData = {
-    data: Record<string, any> | null;
-    edited: Record<string, any> | null;
-    resetForm: (key?: string[] | string) => void;
-};
-type SubmitHandler = (args: SubmitData) => Promise<boolean | void>;
 interface ConfirmationRenderProps {
     success: (data?: any) => void;
     cancel: () => void;
@@ -287,14 +273,14 @@ declare class SharedMemory {
 declare const sharedMemory: SharedMemory;
 
 declare const setEditData: (formId: string, data: Record<string, any>) => void;
-declare const setFieldValue: (formId: string, FieldCredentials: FieldProps$1) => void;
+declare const setFieldValue: (formId: string, FieldCredentials: FieldProps) => void;
 declare const resetForm: (formId: string, key: string[] | string) => void;
 declare const clearForm: (formId: string) => void;
 declare const formGlobalAction: (formId: string) => {
     setEditData: (data: Record<string, any>) => void;
-    setValue: (FieldCredentials: FieldProps$1) => void;
+    setValue: (FieldCredentials: FieldProps) => void;
     resetForm: (key: string[] | string) => void;
     clearForm: () => void;
 };
 
-export { _default$3 as ArrayContainer, MemoizedAutoInput as AutoInput, type ConfirmationRenderProps, memoizedDateInput as DateInput, MemoizedDisabledInput as DisabledInput, _default$2 as FormRow, _default as InputContainer, MemoizedNumInput as NumInput, MemoizedObjectContainer as ObjectContainer, _default$1 as SearchInput, MemoizedSelectInput as SelectInput, MemoizedStrInput as StrInput, MemoizedSubmitButton as SubmitButton, type SubmitButtonRef, type SubmitHandler, clearForm, formGlobalAction, resetForm, setEditData, setFieldValue, sharedMemory };
+export { _default$3 as ArrayContainer, MemoizedAutoInput as AutoInput, type ConfirmationRenderProps, memoizedDateInput as DateInput, MemoizedDisabledInput as DisabledInput, _default$2 as FormRow, _default as InputContainer, MemoizedNumInput as NumInput, MemoizedObjectContainer as ObjectContainer, type OnSubmit, _default$1 as SearchInput, MemoizedSelectInput as SelectInput, MemoizedStrInput as StrInput, MemoizedSubmitButton as SubmitButton, type SubmitButtonRef, clearForm, formGlobalAction, resetForm, setEditData, setFieldValue, sharedMemory };

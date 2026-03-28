@@ -7,7 +7,7 @@ import Input from './Input';
 import { useContainerContext } from '../context/ContainerContext';
 import type { TWInputStyleProp } from '../typeDeclaration/stylesProps';
 import { useStyles } from '../hooks/useStylingMods';
-import { OnInputChange } from '../typeDeclaration/inputProps';
+import { OnInputChange } from '@/typeDeclaration/baseProps';
 
 interface DisabledInputProps {
     initialValue?: string;

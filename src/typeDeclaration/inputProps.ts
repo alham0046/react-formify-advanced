@@ -10,31 +10,6 @@ export interface FullInputProps extends BaseInputProps {
 // export type InputProps = Omit<FullInputProps, "isArrayObject" | "arrayData" | "onInputChange">;
 export type InputProps = FullInputProps & Validation
 
-
-export interface OnInputChangeArgs {
-  value: string | number
-  setValue: (field: FieldProps) => void
-}
-
-export interface FieldProps {
-    [key: string]: any;
-}
-
-export type OnInputChange = (args: OnInputChangeArgs) => void
-
-export interface onEnterPressArgs extends OnInputChangeArgs {
-  stopPropagation: () => void
-  data: Record<string, any>
-}
-
-export type OnEnterPress = (args: onEnterPressArgs) => void
-
-export interface OnBlurArgs extends OnInputChangeArgs {
-  data: Record<string, any>
-}
-
-export type OnBlur = (args: OnBlurArgs) => void
-
 export interface OnSubmitArgs {
   data: Record<string, any> | null
   edited: Record<string, any> | null

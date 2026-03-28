@@ -8,8 +8,8 @@ import { useContainerContext } from '../context/ContainerContext';
 import { DropdownContext } from '../context/DropdownContext';
 import { handleInitialValue } from '../Utils/setInitialValue';
 import { useStyles } from '../hooks/useStylingMods';
-import { FieldProps } from '../typeDeclaration/inputProps';
 import { SelectProps } from '../typeDeclaration/dropdownProps';
+import { FieldProps } from '@/typeDeclaration/baseProps';
 
 const SelectInput: FC<SelectProps> = ({
     name,

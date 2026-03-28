@@ -3,16 +3,6 @@ import { getEditedData } from '../Utils/getEditedData';
 import { useContainerContext } from '../context/ContainerContext';
 import type { OnSubmit } from '../typeDeclaration/inputProps';
 
-// Define the arguments object for clarity
-type SubmitData = {
-  data: Record<string, any> | null;
-  edited: Record<string, any> | null;
-  resetForm: (key?: string[] | string) => void;
-};
-
-// Define the exact type signature for the handler function
-export type SubmitHandler = (args: SubmitData) => Promise<boolean | void>;
-
 export interface ConfirmationRenderProps {
   success: (data?: any) => void
   cancel: () => void
@@ -32,7 +22,6 @@ interface SubmitProps {
   className?: string
   disabled?: boolean
   closeModal?: () => void
-  // onClick?: SubmitHandler
   onClick?: OnSubmit
   /**
    * Configuration for enabling and customizing a confirmation modal.

@@ -10,7 +10,8 @@ export { default as DateInput } from './components/DateInput'
 export { default as DisabledInput } from './components/DisabledInput';
 export { default as FormRow } from './components/FormRow';
 export {default as SearchInput} from './components/SearchInput'
-export { default as SubmitButton, type ConfirmationRenderProps, type SubmitHandler, type SubmitButtonRef } from './components/SubmitButton';
+export { default as SubmitButton, type ConfirmationRenderProps, type SubmitButtonRef } from './components/SubmitButton';
 export { default as InputContainer } from './components/InputContainer';
+export type {OnSubmit} from './typeDeclaration/inputProps'
 export {sharedMemory} from './store/sharedMemory'
 export {clearForm, formGlobalAction, resetForm, setEditData, setFieldValue} from './Utils/GlobalFromAction'

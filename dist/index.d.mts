@@ -273,12 +273,12 @@ declare const sharedMemory: SharedMemory;
 
 declare const setEditData: (formId: string, data: Record<string, any>) => void;
 declare const setFieldValue: (formId: string, FieldCredentials: FieldProps) => void;
-declare const resetForm: (formId: string, key: string[] | string) => void;
+declare const resetForm: (formId: string, key?: string[] | string) => void;
 declare const clearForm: (formId: string) => void;
 declare const formGlobalAction: (formId: string) => {
     setEditData: (data: Record<string, any>) => void;
     setValue: (FieldCredentials: FieldProps) => void;
-    resetForm: (key: string[] | string) => void;
+    resetForm: (key?: string[] | string) => void;
     clearForm: () => void;
 };
 

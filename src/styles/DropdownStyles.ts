@@ -1,4 +1,3 @@
-import { DropdownStyleProp, InputStyle, TWDropdownStyleProp } from "src/typeDeclaration/stylesProps";
 
 // export const DEFAULT_DROPDOWN_STYLE: InputStyle & Pick<DropdownStyleProp, 'dropdownOffset'> = {
 //   borderWidth: '2px',
@@ -6,6 +5,9 @@ import { DropdownStyleProp, InputStyle, TWDropdownStyleProp } from "src/typeDecl
 //   boxWidth: '100%',
 //   placeHolderOffset: '16px',
 //   dropdownOffset: 5,
+
+import { DropdownStyleProp, TWDropdownStyleProp } from "@/typeDeclaration/stylesProps"
+
 // }
 export const DEFAULT_DROPDOWN_STYLE: DropdownStyleProp = {
   dropdownOffset: 5,

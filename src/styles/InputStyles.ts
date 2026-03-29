@@ -1,4 +1,4 @@
-import { InputStyle, TWInputStyleProp } from "src/typeDeclaration/stylesProps";
+import { InputStyle, TWInputStyleProp } from "@/typeDeclaration/stylesProps"
 
 export const DEFAULT_INPUT_STYLE: InputStyle = {
   borderWidth: '2px',

@@ -1,6 +1,6 @@
 {
   "name": "react-formify-advanced",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Reusable Non-Zustand-based input kit for React forms.",
   "author": "Alham",
   "license": "ISC",

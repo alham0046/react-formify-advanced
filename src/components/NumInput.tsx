@@ -79,7 +79,6 @@ const NumInput = forwardRef<InputRefProps, NumInputProps>(({ ...props }, ref) =>
 
     return (
         <div className={`relative ${containerStyles}`} style={{ ...containerStyles, width: boxWidth }} /* style={{ display: hiddenValue ? 'none' : 'block', position : 'relative' }} */>
-            {/* {console.log('rendering StrInput', modifiedName)} */}
             <InputTemplate
                 name={modifiedName}
                 placeholder={placeholder}
@@ -199,18 +198,15 @@ export default MemoizedNumInput;
 //     const prevValueRef = useRef(value)
 //     useEffect(() => {
 //         if (!onChange) return
-//         // console.log('the value of value is', value)
 //         if (value !== prevValueRef.current) {
 //             prevValueRef.current = value
 //             if (isIndex(value)) {
-//                 console.log('the value of value is', value)
 //                 onChange(Number(value))  // Pass null as no event.data
 //             }
 //         }
 //     }, [value])
 //     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 //         const inputVal = e.target.value
-//         // // console.log('the number value is', inputVal)
 //         const newValue = inputVal === "" ? "" : stringValidation(Number(inputVal))
 //         // const nativeEvent = e.nativeEvent as unknown as InputEvent; // Type assertion to InputEvent
 //         // onChange(newValue, nativeEvent.data);

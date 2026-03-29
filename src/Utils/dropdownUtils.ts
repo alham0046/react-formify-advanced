@@ -16,7 +16,6 @@ export const calculatePosition = ({ fixedRef, modalRef, dropdownOffset = 0 }: Po
     const spaceBelow = innerHeight - inputRect.bottom;
     const spaceAbove = inputRect.top
 
-    // console.log('the modal rect is', spaceBelow)
 
     const direction =
         spaceBelow > modalRect.height

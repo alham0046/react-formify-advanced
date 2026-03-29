@@ -234,7 +234,6 @@ export default memo(BaseDropdown)
 //   })
 
 //   const filteredOptions: (string | DropdownOption)[] = useMemo(() => {
-//     // console.log('inside filteredoptions', name)
 //     if (!search) return options;
 //     const lowered = search.toLowerCase();
 
@@ -254,20 +253,17 @@ export default memo(BaseDropdown)
 
 //   useLayoutEffect(() => {
 //     if (open) {
-//       console.log('recalculating vasedropdown')
 //       calculatePosition()
 //       // reset()
 //     }
 //   }, [open, options.length])
 //   // useEffect(() => {
 //   //   if (open) {
-//   //     console.log('recalculating vasedropdown', filteredOptions.length)
 //   //     reset()
 //   //   }
 //   // }, [open, filteredOptions.length])
 
 //   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-//     // console.log('the string value is', registerOption)
 //     reset()
 //     setSearch(e.target.value)
 //     onSearchChange?.(e.target.value)
@@ -313,7 +309,6 @@ export default memo(BaseDropdown)
 
 //   useEffect(() => {
 //     if (!open) return;
-//     console.log('focus', searchRef.current)
 //     searchRef.current?.focus();
 
 //     const handler = () => calculatePosition();
@@ -337,7 +332,6 @@ export default memo(BaseDropdown)
 //       style={position}
 //       onMouseDown={(e) => e.stopPropagation()}
 //     >
-//       {console.log('the position is', value)}
 //       {searchable && (
 //         <div className="p-2 border-b">
 //           <input

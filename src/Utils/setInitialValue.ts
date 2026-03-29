@@ -16,7 +16,6 @@ export const handleInitialValue = (name: string, initialValue: string, inputStor
 //         return;
 //     }
 //     const value = storedData[name] || initialValue
-//     // console.log("rendering hanldeInitialValue", name, value)
 //     if (value) {
 //         inputStore.currentValue = initialValue
 //     }
@@ -42,7 +41,6 @@ export const handleInitialValue = (name: string, initialValue: string, inputStor
 // import { inputStore } from "../store/InputStore";
 
 // export const handleInitialValue = (name : string, initialValue : string,setInputValue : (name : string, value : any) => void, compName : string) => {
-//     console.log("rendering hanldeInitialValue")
 //     const storedData = inputStore.getSnapshot().inputData;
 //     if (!storedData) {
 //         return;

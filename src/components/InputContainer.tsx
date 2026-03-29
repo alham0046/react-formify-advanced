@@ -100,18 +100,14 @@ const InputContainer: FC<InputContainerProps> = ({ children, className, style, f
         }
         current = current.parentElement;
       }
-      // console.log('the bg color is', backgroundColor)
       if (backgroundColor == 'rgba(0, 0, 0, 0)' || backgroundColor == '') {
-        console.log('no background color found')
         storeRef.current?.setBackgroundColor('white')
       }
       else {
-        console.log('background color found', backgroundColor)
         storeRef.current?.setBackgroundColor(backgroundColor)
       }
     }
     return () => {
-      console.log('resetting input store')
       // inputStore.clear()
       storeRef.current?.reset()
     }
@@ -119,7 +115,6 @@ const InputContainer: FC<InputContainerProps> = ({ children, className, style, f
 
   return (
     <ContainerContext.Provider value={contextValue}>
-      {/* {console.log('rendering input container', contextValue.sharedTw)} */}
       <div
         ref={containerRef}
         style={style}
@@ -192,7 +187,6 @@ export default memo(InputContainer)
 //         }
 //         current = current.parentElement;
 //       }
-//       // console.log('the bg color is', backgroundColor)
 //       if (backgroundColor == 'rgba(0, 0, 0, 0)' || backgroundColor == '') setBgColor('white')
 //       else setBgColor(backgroundColor)
 //       // setBgColor(backgroundColor ?? 'white')

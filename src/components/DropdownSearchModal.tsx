@@ -31,7 +31,6 @@ const DropdownSearchModal: React.FC<DropdownSearchModalProps<any>> = ({
     onSelect,
     renderItem,
 }) => {
-    // console.log('lkdjfgos')
     const { inputStore } = useContainerContext()
     // const {twOptionItemStyles} = twStyle
     const options: any[] = useSyncExternalStore(
@@ -55,7 +54,6 @@ const DropdownSearchModal: React.FC<DropdownSearchModalProps<any>> = ({
 
     // const { dropdownOffset } = style
 
-    console.log('logging outside')
 
     const optionLength = options?.length > 0 || false
 
@@ -72,7 +70,6 @@ const DropdownSearchModal: React.FC<DropdownSearchModalProps<any>> = ({
 
             inputStore.setValue(name, finalValue)
         }
-        // console.log('opt', opt)
         // onSelect ? onSelect(opt, setDropdownValue) : inputStore.setValue(name, opt)
         // inputStore.setValue(name, opt)
         closeDropdown()
@@ -101,7 +98,6 @@ const DropdownSearchModal: React.FC<DropdownSearchModalProps<any>> = ({
 
     return (
         <>
-            {/* {console.log('optionLength', options)} */}
             <BaseDropdown
                 open={optionLength}
                 name={name}
@@ -252,7 +248,6 @@ export default memo(DropdownSearchModal)
 //     role="listbox"
 //     className="absolute z-50 mt-1 w-full rounded-md border bg-white shadow-md"
 //     >
-//     {console.log('rendering DropdownSearchModal')}
 //     {options.map((item, index) => {
 //         const active = index === activeIndex
 

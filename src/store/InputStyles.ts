@@ -1,4 +1,6 @@
-import type { FieldVisualState } from "./Config/FieldVisualState"
+// import type { FieldVisualState } from "./Config/FieldVisualState"
+
+import { FieldVisualState } from "@/Config/FieldVisualState"
 
 export type NormalizedStyle = {
     className?: string
@@ -45,7 +47,6 @@ export class InputStyles {
         if (states.has(state)) return
 
         states.add(state)
-        console.log('enabling state', key, state, states)
         this.apply(key, state)
     }
 
@@ -148,7 +149,6 @@ export const inputStylesStore = new InputStyles()
 //         if (states.has(state)) return
 
 //         states.add(state)
-//         console.log('enabling state', key, state, states)
 //         this.apply(key, state)
 //     }
 

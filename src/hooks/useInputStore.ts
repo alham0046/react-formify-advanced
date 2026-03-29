@@ -121,15 +121,11 @@
 //     () => {
 //       // if (inputStore.isEditMode) {
 //       if (initialRender.current) {
-//         // console.log("getting input store value inside the hook", valueRef.current, inputStore.currentValue, key)
-//         // console.log('inside initial render')
 //         // if (valueRef.current === inputStore.getSnapshot().inputData![key]) return valueRef.current
 //         if (valueRef.current === inputStore.getInputNestedValue(key)) return valueRef.current
 //       }
 //       if (valueRef.current === inputStore.currentValue) return valueRef.current
-//       // console.log("getting input store value inside the hook old one", valueRef.current, inputStore.currentValue, key)
 //       const value = inputStore.getHookValue(key)
-//       // console.log("getting input store value inside the hook", key, value, valueRef.current, inputStore.currentValue)
 //       valueRef.current = value
 //       return value
 //     }
@@ -143,7 +139,6 @@
 //     (listener) => inputStore.subscribe(key, listener),
 //     () => {
 //       const value = inputStore.getValue(key)
-//       console.log("notifying input store", key)
 //       return value? value : ""
 //     }
 //   )
@@ -156,6 +151,5 @@ export function useInputStore(key: string, inputStore: InputStore) {
   return useSyncExternalStore(
     (listener) => inputStore.subscribe(key, listener),
     () => inputStore.getValue(key) ?? ""
-    // () => console.log("notifying input store", key),
   )
 }

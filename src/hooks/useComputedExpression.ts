@@ -33,7 +33,6 @@ export function useComputedExpression(
       return () => node.listeners.delete(cb)
     },
     () => {
-      console.log("useComputedExpression", key, node.value)
       return node.value
     }
   )
@@ -58,7 +57,6 @@ export function useComputedExpression(
 //     },
 //     () => {
 //       const val = evaluate(inputStore.getSnapshot().inputData ?? {})
-//       console.log('useComputedExpression', deps, val)
 //       return val
 //     }
 //   )
@@ -177,7 +175,6 @@ export function useComputedExpression(
 //             }
 //             const currentValue = getNestedValue(inputData, currentInputKey);
 //             if (isLastComputedValid && !currentValue) {
-//                 // console.log('returning last computed value for missing key', propValue, isLastComputedValid, inputData[currentInputKey]);
 //                 return lastComputedRef.current;
 //             }
 //             // if (isLastComputedValid && !inputData[currentInputKey]) {

@@ -28,7 +28,6 @@ const OptionItem = forwardRef<HTMLDivElement, Props>(
                     ${optionClass}
                 `}
             >
-                {/* {console.log('the options redering')} */}
                 {label}
             </div>
         );

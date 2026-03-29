@@ -3,7 +3,6 @@ import { getNestedValue } from "./inputStoreUtils"
 
 
 export const getEditedData = (inputStore : InputStore) : { data: Record<string, any> | null, edited: Record<string, any> | null } => {
-    console.log("getting edited data")
     const { editedKeys, inputData } = inputStore.getSnapshot()
     const edited: Record<string, any> = {}
 

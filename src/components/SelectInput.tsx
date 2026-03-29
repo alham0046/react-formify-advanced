@@ -88,7 +88,6 @@ const SelectInput: FC<SelectProps> = ({
         // <DropdownContext.Provider value={{style : resolvedStyle, twStyle : resolvedTwStyle, name: modifiedName}}>
         <DropdownContext.Provider value={{twHighlightedStyles : tw.twHighlightedStyles, highlightedStyle : resolvedStyle.highlightedStyles}}>
             <div className={`relative ${tw.twContainerStyles}`} style={{...containerStyles, width: boxWidth}} /* style={{ display: hiddenValue ? 'none' : 'block', position : 'relative' }} */>
-                {/* {console.log('rendering StrInput', modifiedName, resolvedStyle, tw)} */}
                 <InputTemplate
                     name={modifiedName}
                     placeholder={placeholder}
@@ -279,7 +278,6 @@ export default MemoizedSelectInput;
 
 //     return (
 //         <div className={`relative ${twStyle?.containerStyles}`} /* style={{ display: hiddenValue ? 'none' : 'block', position : 'relative' }} */>
-//             {/* {console.log('rendering StrInput', modifiedName)} */}
 //             <InputTemplate
 //                 name={modifiedName}
 //                 placeholder={placeholder}
@@ -431,8 +429,6 @@ export default MemoizedSelectInput;
 
 //     return (
 //         <div>
-//             {/* {console.log('here is select input chat is', name, placeholder, staticOptions, disabledValue, hiddenValue)} */}
-//             {/* {console.log('rendering SelectInput')} */}
 //             <SelectTemplate
 //                 name={modifiedName}
 //                 placeholder={placeholder}
@@ -583,7 +579,6 @@ export default MemoizedSelectInput;
 
 //     return (
 //         <div style={{ display: hiddenValue ? 'none' : 'block' }}>
-//             {/* {console.log('here is select input is')} */}
 //             <SelectTemplate
 //                 name={name!}
 //                 value={value}

@@ -75,7 +75,6 @@ const SubmitButton = forwardRef<SubmitButtonRef, SubmitProps>((
   const handleSubmit = useCallback(async (e: MouseEvent<HTMLDivElement>) => {
     if (disabled || openModal) return
     if (!inputStore.validatorStore.isValid()) {
-      console.log('form is not valid')
       return
     }
     // if (renderConfirmationModel) setOpenModal(true)

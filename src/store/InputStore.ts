@@ -119,7 +119,6 @@ export class InputStore {
   }
 
   private notify(key: string | string[]) {
-    // console.log("notifying input store", key)
     if (isArray(key)) {
       key.forEach(k => this.notify(k))
       return
@@ -131,7 +130,6 @@ export class InputStore {
     }
 
     this.listeners.get(key)?.forEach(l => l())
-    // this.listeners.get(key)?.forEach(l => {console.log("notifying input store", key);l()})
   }
 
   private notifyAll() {
@@ -161,7 +159,6 @@ export class InputStore {
   }
 
   setBackgroundColor(color: string) {
-    // console.log("setBackgroundColor", color)
     this.backgroundColor = color
     if (this.mainContainer) {
       this.mainContainer.style.setProperty("--line-bg", color)
@@ -176,7 +173,6 @@ export class InputStore {
         initialData: structuredClone(data),
         editedKeys: new Set()
       }
-      console.log("hydrating arrays", this.state.inputData)
       this.collectKeys(data)
     })
   }
@@ -215,7 +211,6 @@ export class InputStore {
   setFieldInitialData(key: string, value: any, isDisabledInput?: boolean) {
     this.setNestedValue(this.state.inputData, key, value)
     if (isDisabledInput) {
-      console.log("setting initial value disabled", key, value)
       this.setNestedValue(this.rawData, key, value)
       return
     } else {
@@ -289,7 +284,6 @@ export class InputStore {
         return
       }
     }
-    // console.log("reset input store", this.rawData)
     const data = structuredClone(this.rawData ?? {})
     this.state = {
       inputData: data,
@@ -300,7 +294,6 @@ export class InputStore {
     this.arrayItems.clear()
     this.sharedContext.clear()
     this.notifyAll()
-    // console.log("reset input store success", this.arrayItems.size)
   }
 
   clear() {
@@ -371,7 +364,6 @@ export class InputStore {
       : [...prev, value]
 
     this.arrayItems.set(path, next)
-    console.log("adding array item", path, this.arrayItems)
     this.notify(path)
   }
 
@@ -471,7 +463,6 @@ export class InputStore {
 
 // if (!computed) return
 
-// console.log("recomputing", key)
 
 // computed.forEach(node => this.recompute(node))
 // }

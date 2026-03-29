@@ -43,13 +43,11 @@ const DropdownModal: FC<DropdownModalProps> = ({
 }) => {
     const {inputStore} = useContainerContext()
     const value: string = useInputStore(name, inputStore)
-    console.log('value', value)
     const rotateRef = useRef<RotatingDropdownRef>(null)
     const [isOpen, setIsOpen] = useState(false);
     // const [label, setLabel] = useState(value ||'Select an Option');
     const {inputInlineStyle, dropdownOffset} = style
     const {twOptionItemStyles, twInputStyles,twOptionBoxStyles="", twSelectedStyles} = twStyle
-    console.log('inside dropdownmodal', twSelectedStyles)
     
     const inputRef = useRef<HTMLDivElement>(null);
 
@@ -58,20 +56,17 @@ const DropdownModal: FC<DropdownModalProps> = ({
         const handleClickOutside = (event: MouseEvent) => {
             if (inputRef.current && !inputRef.current.contains(event.target as Node)) {
                 // setIsOpen(false);
-                console.log('click outside', isOpen)
                 closeDropdown();
             }
         };
         document.addEventListener('mousedown', handleClickOutside);
         return () => {
-            console.log('removing event listener')
             document.removeEventListener('mousedown', handleClickOutside);
         };
     }, [isOpen]);
 
     const handleOptionSelect = useCallback((option: DropdownOption) => {
         const selectedValue = option.value;
-        // console.log('selected value', option, isOpen)
         onSelect(selectedValue);
         closeDropdown();
         // setLabel(selectedValue)
@@ -90,7 +85,6 @@ const DropdownModal: FC<DropdownModalProps> = ({
     }, [isOpen])
 
     useEffect(() => {
-        // console.log('dropdown state changed', isOpen)
         onToggleDropdown?.(isOpen);
     }, [isOpen])
 
@@ -107,7 +101,6 @@ const DropdownModal: FC<DropdownModalProps> = ({
             className={`relative outline-none`}
             // className={`relative outline-none ${twInputStyles}`}
         >
-            {/* {console.log('rendering dropdown modal with options', isOpen)} */}
             <div
                 className={`input-border cursor-pointer ${twInputStyles}`}
                 style={inputInlineStyle}
@@ -135,7 +128,6 @@ const DropdownModal: FC<DropdownModalProps> = ({
                     // }}
                     renderItem={(opt, index, highlighted, ref, onHover, isSelected) => {
                         const option = opt as DropdownOption
-                        console.log('rendering drpdown option', isSelected)
                         return (
                         <div
                           key={option.value}
@@ -297,7 +289,6 @@ export default memo(DropdownModal, (prev, next) => shallowOrDeepEqual(prev.optio
 //         const optionsListHeight = !isEmptyArray(filteredOptions) ? filteredOptions.length * 40 : 40
 //         const dropdownHeight = Math.min(dropdownMaxHeight, optionsListHeight + (seachable ? 40 : 0)); // +40 for search bar height
 
-//         // console.log('calculated dropdown height as', dropdownHeight, 'for options list height', optionsListHeight);
 
 //         const spaceBelow = modalContainer.clientHeight - inputRect.bottom;
 //         const spaceAbove = inputRect.top - modalRect.top;
@@ -468,7 +459,6 @@ export default memo(DropdownModal, (prev, next) => shallowOrDeepEqual(prev.optio
 //             tabIndex={0} // Makes the div focusable for keyboard navigation
 //             className={`py-2 px-2 relative border-2 w-full h-12 flex justify-between items-center rounded-lg outline-none bg-transparent cursor-pointer ${inputStyles}`}
 //         >
-//             {console.log('rendering dropdown modal with options', options, name)}
 //             <span>{options.find((opt) => opt.value === value)?.label || 'Select an Option'}</span>
 //             <svg
 //                 className={`w-4 h-4 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
@@ -554,7 +544,6 @@ export default memo(DropdownModal, (prev, next) => shallowOrDeepEqual(prev.optio
 //         };
 //     }, []);
 //     const handleOptionClick = (selectedValue: string) => {
-//         console.log('option clicked', selectedValue)
 //         setValue(selectedValue);
 //         onSelect(selectedValue);
 //         setIsOpen(false);
@@ -573,7 +562,6 @@ export default memo(DropdownModal, (prev, next) => shallowOrDeepEqual(prev.optio
 //             option.label.toLowerCase().includes(search.toLowerCase())
 //         );
 //     }, [search, options]);
-//     // useEffect(() => { console.log('the isopen value is', isOpen) }, [isOpen])
 //     const toggleDropdown = () => {
 //         if (disabled || isEmptyArray(options)) return
 //         onToggleDropdown && onToggleDropdown(isOpen);
@@ -676,7 +664,6 @@ export default memo(DropdownModal, (prev, next) => shallowOrDeepEqual(prev.optio
 //             tabIndex={0}
 //             className={`py-2 px-2 relative border-2 w-full h-12 flex justify-between items-center rounded-lg outline-none bg-transparent cursor-pointer ${inputStyles}`}
 //         >
-//             {console.log('rendering dropdown modal with options', options, name)}
 //             <span>{options.find((opt) => opt.value === value)?.label || ''}</span>
 //             <svg
 //                 className={`w-4 h-4 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
@@ -839,7 +826,6 @@ export default memo(DropdownModal, (prev, next) => shallowOrDeepEqual(prev.optio
 //             option.label.toLowerCase().includes(search.toLowerCase())
 //         );
 //     }, [search, options]);
-//     // useEffect(() => { console.log('the isopen value is', isOpen) }, [isOpen])
 //     const toggleDropdown = () => {
 //         if (disabled || isEmptyArray(options)) return
 //         onToggleDropdown && onToggleDropdown(isOpen);
@@ -907,7 +893,6 @@ export default memo(DropdownModal, (prev, next) => shallowOrDeepEqual(prev.optio
 //             tabIndex={0}
 //             className={`py-2 px-2 relative border-2 w-full h-12 flex justify-between items-center rounded-lg outline-none bg-transparent cursor-pointer ${inputStyles}`}
 //         >
-//             {console.log('rendering dropdown modal with options')}
 //             <span>{options.find((opt) => opt.value === value)?.label || ''}</span>
 //             <svg
 //                 className={`w-4 h-4 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}

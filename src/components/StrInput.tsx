@@ -41,7 +41,6 @@ const StrInput = forwardRef<InputRefProps, InputProps>(({...props}, ref) => {
 
     return (
         <div className={`relative ${tw.twContainerStyles}`} style={{...containerStyles, width: boxWidth}} /* style={{ display: hiddenValue ? 'none' : 'block', position : 'relative' }} */>
-            {/* {console.log('rendering StrInput', modifiedName, bgColor)} */}
             <InputTemplate
                 name={modifiedName}
                 placeholder={placeholder}
@@ -129,7 +128,6 @@ export default MemoizedStrInput;
 
 //     return (
 //         <div className={containerStyles} /* style={{ display: hiddenValue ? 'none' : 'block', position : 'relative' }} */>
-//             {/* {console.log('rendering StrInput', modifiedName)} */}
 //             <InputTemplate
 //                 ref={ref}
 //                 name={modifiedName}

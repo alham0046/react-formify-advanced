@@ -49,7 +49,6 @@ const SearchInput = forwardRef<InputRefProps, SearchInputProps<any>>(({ ...props
         timeOutObj.current = setTimeout(async () => {
             // setSearch(value as string)
             const searchedData = await onChange(changedValue)
-            // console.log('searchedData', searchedData)
             inputStore.setDropdownSearch(`d_${modifiedName}`, searchedData)
             // setSearch(searchedData)
         }, 800);
@@ -77,7 +76,6 @@ const SearchInput = forwardRef<InputRefProps, SearchInputProps<any>>(({ ...props
     return (
         <DropdownContext.Provider value={{ twHighlightedStyles: tw.twHighlightedStyles, highlightedStyle: resolvedStyle.highlightedStyles }}>
             <div className={`relative ${tw.twContainerStyles}`} style={{ ...containerStyles, width: boxWidth }} /* style={{ display: hiddenValue ? 'none' : 'block', position : 'relative' }} */>
-                {/* {console.log('rendering StrInput', modifiedName)} */}
                 <InputTemplate
                     name={modifiedName}
                     placeholder={placeholder}
@@ -168,7 +166,6 @@ export default memo(SearchInput)
 
 //     const onValueChange = (value: string | number) => {
 //         if (value === "") return
-//         // console.log('rendering searchinput', search.length)
 //         // clearTimeout(timeOutObj.current)
 //         // timeOutObj.current = setTimeout(async () => {
 //         //     // setSearch(value as string)

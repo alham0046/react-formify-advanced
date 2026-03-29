@@ -11,7 +11,6 @@
 //     const [position, setPosition] = useState<{ top?: number; left?: number; width?: number; } | undefined>(undefined);
 //     useLayoutEffect(() => {
 //         if (isOpen) {
-//             console.log('recalculating position outside calculateposition')
 //             calculatePosition()
 //         }
 //     }, [isOpen])
@@ -26,8 +25,6 @@
 //         const spaceBelow = innerHeight - inputRect.bottom;
 //         // const spaceAbove = inputRect.top
 
-//         console.log('recalculating position inside calculateposition')
-//         // console.log('the modal rect is', spaceBelow)
 
 //         const direction =
 //             spaceBelow > modalRect.height

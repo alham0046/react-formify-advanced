@@ -16,7 +16,6 @@
 //         (e) => listener(e)
 //     );
 //     element?.addEventListener(type, navHandler)
-//     return () => {console.log('removing'); element?.removeEventListener(type, navHandler)}
 // }
 import { isRefObject } from "../functions/dataTypesValidation";
 
@@ -26,7 +25,6 @@ const refineTarget = (target?: any): EventTarget | null => {
         return document.getElementById(target) || window;
     }
     if (isRefObject(target)) {
-        console.log('the target is', target)
         return target.current
     }
     if (target instanceof HTMLElement) {
@@ -47,7 +45,6 @@ export const keyboardAction = (
 ) => {
     const keySet = new Set(keys);
 
-    // console.log('the type of target is', typeof target)
     const refinedTarget = refineTarget(target)
     if (!refinedTarget) return () => {};
 
@@ -62,7 +59,6 @@ export const keyboardAction = (
     refinedTarget?.addEventListener(type, navHandler);
 
     return () => {
-        console.log('removing')
         refinedTarget?.removeEventListener(type, navHandler);
     };
 };

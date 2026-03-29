@@ -5,7 +5,6 @@
 // }
 
 export function getNestedValue(obj: any, path: string) {
-    // console.log('getting nested value', obj, path)
   return path.split('.').reduce((curr, key) => {
     if (curr == null) return undefined
     return isIndex(key) ? curr[Number(key)] : curr[key]

@@ -42,7 +42,6 @@ const InputTemplate : FC<TemplateProps> = ({
             className={`relative w-full group input-root`} /* onFocus={() => setFocusInputKey(name)} */
             style={{ ['--bw' as any]: borderWidth, ['--bh' as any]: boxHeight, ['--po' as any]: placeHolderOffset, ['--float' as any]: childType === 'dropdown' ? 1 : 0, }}
         >
-            {/* {console.log('thev valueof ', name)} */}
             {children}
             {!labelMode && <label
                 id={`floating_input_${name}`}
@@ -151,7 +150,6 @@ export default memo(InputTemplate)
 //     const bgColor = inputStore.backgroundColor
 //     const value: string | number = fixedValue ?? useInputStore(name) ?? ""
 //     const handlePreInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-//         console.log('the string value is', e.target.value)
 //         const evalue = e.target.value
 //         // inputStore.currentValue = evalue
 //         if (maxLength && evalue.length == maxLength + 1) {
@@ -175,19 +173,16 @@ export default memo(InputTemplate)
 
 
 //     const handleBlur = () => {
-//         // console.log('blurred')
 //         inputStylesStore.disable(name, FieldVisualState.Focus)
 //         const data = inputStore.getSnapshot()
 //         onBlur?.({ currentValue: value ?? "", allData: data as Record<string, any> })
 //     }
 //     const handleFocus = () => {
 //         inputStylesStore.enable(name, FieldVisualState.Focus)
-//         // console.log('blurred')
 //         onFocus?.(name)
 //     }
 //     const handleKeyPresses = (event: React.KeyboardEvent<HTMLInputElement>) => {
 //         if (event.key === 'Enter') {
-//             console.log('enter pressed')
 //             const data = inputStore.getSnapshot()
 //             onEnterPress?.({ currentValue: value ?? "", allData: data as Record<string, any> })
 //         }
@@ -212,7 +207,6 @@ export default memo(InputTemplate)
 //             style={{ ['--bw' as any]: borderWidth, ['--bh' as any]: boxHeight, ['--po' as any]: placeHolderOffset }}
 //         >
 //             {/* <div className="absolute inset-0 rounded-lg input-border pointer-events-none" /> */}
-//             {/* {console.log('thev valueof ', name, placeholder, style)} */}
 //             <input
 //                 type={type}
 //                 id={`floating_input_${name}`}
@@ -351,7 +345,6 @@ export default memo(InputTemplate)
 //     const bgColor = inputStore.backgroundColor
 //     const value: string | number = fixedValue ?? useInputStore(name) ?? ""
 //     const handlePreInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-//         console.log('the string value is', e.target.value)
 //         const evalue = e.target.value
 //         // inputStore.currentValue = evalue
 //         if (maxLength && evalue.length == maxLength + 1) {
@@ -377,19 +370,16 @@ export default memo(InputTemplate)
 
 
 //     const handleBlur = () => {
-//         // console.log('blurred')
 //         inputStylesStore.disable(name, FieldVisualState.Focus)
 //         const data = inputStore.getSnapshot()
 //         onBlur?.({ currentValue: value ?? "", allData: data as Record<string, any> })
 //     }
 //     const handleFocus = () => {
 //         inputStylesStore.enable(name, FieldVisualState.Focus)
-//         // console.log('blurred')
 //         onFocus?.(name)
 //     }
 //     const handleKeyPresses = (event: React.KeyboardEvent<HTMLInputElement>) => {
 //         if (event.key === 'Enter') {
-//             console.log('enter pressed')
 //             const data = inputStore.getSnapshot()
 //             onEnterPress?.({ currentValue: value ?? "", allData: data as Record<string, any> })
 //         }
@@ -403,7 +393,6 @@ export default memo(InputTemplate)
 
 //     useLayoutEffect(() => {
 //         if (labelRef.current) {
-//             // console.log('logging layout')
 //             setLabelWidth(labelRef.current.offsetWidth);
 //         }
 //     }, [placeholder, hideElement]);
@@ -421,7 +410,6 @@ export default memo(InputTemplate)
 //         <div
 //             className={`relative w-full group`} /* onFocus={() => setFocusInputKey(name)} */
 //         >
-//             {/* {console.log('thev valueof ', name, placeholder, value)} */}
 //             <input
 //                 type={type}
 //                 id={`floating_input_${name}`}
@@ -573,7 +561,6 @@ export default memo(InputTemplate)
 //     }, [value, placeholder, hideElement]);
 //     return (
 //         <div className={`relative w-full group ${containerStyles}`} onFocus={() => setFocusInputKey(name)}>
-//             {/* {console.log('thev valueof ', placeholder, type)} */}
 //             <input
 //                 type={type}
 //                 id={`floating_input_${name}`}

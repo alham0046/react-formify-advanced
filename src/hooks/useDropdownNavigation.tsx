@@ -26,7 +26,6 @@ export function useDropdownNavigation(options: (DropdownOption | string)[], clos
   );
 
   useEffect(() => {
-    console.log('options changed', optionRefs.current, optionLength)
   }, [optionLength])
 
 
@@ -34,12 +33,10 @@ export function useDropdownNavigation(options: (DropdownOption | string)[], clos
     // highlightIndexRef.current = 0
     strategy.remove()
     optionRefs.current = []
-    console.log('resetting highlight index')
     // strategy.remove()
   }
   // const reset = () => {
   //   // highlightIndexRef.current = 0
-  //   console.log('resetting highlight index')
   //   // strategy.remove()
   //   updateHighlight(0)
   // }
@@ -49,7 +46,6 @@ export function useDropdownNavigation(options: (DropdownOption | string)[], clos
 
 
 
-  console.log('rendering useDropdown', optionLength)
   const updateHighlight = useCallback((next: number) => {
     if (!optionLength) return
 
@@ -58,7 +54,6 @@ export function useDropdownNavigation(options: (DropdownOption | string)[], clos
 
     const nextEl = optionRefs.current[next]
 
-    console.log('updating highlight', prev, next)
     // strategy.remove(optionRefs.current[prev])
     strategy.swap(nextEl)
     // strategy.remove()
@@ -113,7 +108,6 @@ export function useDropdownNavigation(options: (DropdownOption | string)[], clos
 
     optionRefs.current[index] = el
 
-    console.log('highlighting first option', index, highlightIndexRef.current)
     // If this is first option, auto-highlight it
     // if (index === 0 && highlightIndexRef.current === 0) {
     if (index === 0) {

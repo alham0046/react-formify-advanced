@@ -2,4 +2,3 @@ const randomString = (maxLength: number = 5) => Math.random().toString(36).slice
 
 export { randomString }
 
-// console.log(randomString())

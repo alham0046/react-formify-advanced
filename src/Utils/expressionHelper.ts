@@ -10,7 +10,6 @@ export function evalExpression(template: string, deps: string[], store: any) {
         expr = expr.replace("${" + key + "}", JSON.stringify(value));
     }
 
-    // console.log('evaluating expr:', expr);
 
     try {
         return Function(`"use strict"; return (${expr});`)();
@@ -40,7 +39,6 @@ export function compileExpression(expr: string): CompiledExpression {
         // return `data["${key}"]`
     })
 
-    // console.log('compiling expr:', jsExpr)
 
     const fn = new Function(
         'data',

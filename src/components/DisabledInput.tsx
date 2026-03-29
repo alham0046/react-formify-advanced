@@ -54,7 +54,6 @@ const DisabledInput: FC<DisabledInputProps> = ({
 
     return (
         <div className={`relative ${tw.twPlaceholderStyles}`} style={{...containerStyles, width: boxWidth}} /* style={{ display: hiddenValue ? 'none' : 'block', position : 'relative' }} */>
-            {/* {console.log('rendering StrInput', modifiedName)} */}
             <InputTemplate
                 name={modifiedName}
                 placeholder={placeholder}

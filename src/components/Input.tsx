@@ -65,7 +65,6 @@ const Input = forwardRef<InputRefProps, InputProps>(({
     const { labelMode } = useFormLayout()
     const value: string | number = fixedValue ?? useInputStore(name, inputStore) ?? ""
     const handlePreInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-        // console.log('the string value is', e.target.value)
         const evalue = e.target.value
         // inputStore.currentValue = evalue
         if (maxLength && evalue.length == maxLength + 1) {
@@ -104,21 +103,18 @@ const Input = forwardRef<InputRefProps, InputProps>(({
     }
 
     const handleBlur = () => {
-        // console.log('blurred')
         inputStore.stylesStore.disable(name, FieldVisualState.Focus)
         const data = inputStore.getSnapshot().inputData
         onBlur?.({ value: value ?? "", data: data as Record<string, any>, setValue })
     }
     const handleFocus = () => {
         inputStore.stylesStore.enable(name, FieldVisualState.Focus)
-        // console.log('blurred')
         onFocus?.(name)
     }
 
     const handleKeyPresses = (event: React.KeyboardEvent<HTMLInputElement>) => {
         const stopPropagation = event.stopPropagation
         if (event.key === 'Enter') {
-            // console.log('enter pressed')
             const data = inputStore.getSnapshot().inputData
             onEnterPress?.({ value: value ?? "", data: data as Record<string, any>, stopPropagation, setValue })
             return
@@ -142,7 +138,6 @@ const Input = forwardRef<InputRefProps, InputProps>(({
     }, [name])
     return (
         <>
-        {console.log('the input value is', name, value, inputStore.getFormId())}
             <input
                 type={type}
                 id={`floating_input_${name}`}

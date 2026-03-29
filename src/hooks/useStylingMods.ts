@@ -28,7 +28,6 @@ export const useStyles = <T extends "input" | "dropdown" = "input">(
         }
     }, [sharedStyles, style])
 
-    // console.log('resolvedStyle', sharedStyles)
 
     const tw = useMemo(() => {
         if (!twStyle) return sharedTwToUse

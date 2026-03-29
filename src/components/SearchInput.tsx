@@ -10,6 +10,7 @@ import { useContainerContext } from "../context/ContainerContext"
 import type { DropdownStyleProp, TWDropdownStyleProp, TWInputStyleProp } from "../typeDeclaration/stylesProps"
 import { DropdownContext } from "../context/DropdownContext"
 import { useStyles } from "../hooks/useStylingMods"
+import { FieldProps, OnInputChange } from "@/typeDeclaration/baseProps"
 type SearchOnChange<T> = (
     value: string | number
 ) => T[] | Promise<T[]>
@@ -21,7 +22,7 @@ interface SearchInputProps<T> extends SearchInputBaseProps {
     twStyle?: Partial<TWDropdownStyleProp & TWInputStyleProp>
     style?: Partial<InputStyle & DropdownStyleProp>
     renderItem?: (item: T, index: number, active: boolean) => React.ReactNode
-    onSelect?: (item: T) => void
+    onSelect?: OnInputChange
 }
 
 const SearchInput = forwardRef<InputRefProps, SearchInputProps<any>>(({ ...props }, ref) => {
@@ -55,11 +56,18 @@ const SearchInput = forwardRef<InputRefProps, SearchInputProps<any>>(({ ...props
         inputStore.setValue(modifiedName, changedValue)
     }
 
+    const setValue = (FieldCredentials: FieldProps) => {
+        const keys = Object.keys(FieldCredentials);
+        for (const key of keys) {
+            inputStore.setValue(key, FieldCredentials[key])
+        }
+    }
+
 
     const handleSelect = (value: string) => {
         // onChange(value)
         inputStore.setValue(modifiedName, value)
-        onSelect?.(value)
+        onSelect?.({value, setValue})
 
         // setSearch([])
     }

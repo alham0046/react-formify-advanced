@@ -1,4 +1,4 @@
-import type { BaseInputProps } from "./baseProps";
+import type { BaseInputProps, OnInputChangeArgs } from "./baseProps";
 import type { DropdownStyleProp, TWDropdownStyleProp } from "./stylesProps";
 
 export interface SelectProps extends BaseInputProps<TWDropdownStyleProp, DropdownStyleProp> {
@@ -16,6 +16,8 @@ export interface SelectProps extends BaseInputProps<TWDropdownStyleProp, Dropdow
 export interface OptionMap {
     [key: string]: string[];
 }
+
+export type OnSelect = (args : OnInputChangeArgs) => void
 
 interface SelectOption {
     label: string;

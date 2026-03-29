@@ -194,7 +194,7 @@ interface SearchInputProps<T> extends SearchInputBaseProps {
     twStyle?: Partial<TWDropdownStyleProp & TWInputStyleProp>;
     style?: Partial<InputStyle & DropdownStyleProp>;
     renderItem?: (item: T, index: number, active: boolean) => React.ReactNode;
-    onSelect?: (item: T) => void;
+    onSelect?: OnInputChange;
 }
 declare const _default$1: React$1.NamedExoticComponent<SearchInputProps<any> & React$1.RefAttributes<InputRefProps>>;
 

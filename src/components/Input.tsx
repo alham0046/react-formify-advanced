@@ -6,6 +6,7 @@ import { useFormLayout } from '../context/LabelLayoutContext'
 import { useContainerContext } from '../context/ContainerContext'
 import { FieldProps, OnBlur, OnEnterPress, OnInputChange } from '../typeDeclaration/baseProps'
 import { isArray } from '@/functions/dataTypesValidation'
+import { ArrayHelpers } from './ArrayContainer'
 
 type NonEnterKey = Exclude<React.KeyboardEvent<HTMLInputElement>['key'], 'Enter'>
 
@@ -117,6 +118,14 @@ const Input = forwardRef<InputRefProps, InputProps>(({
         }
     }
 
+    const arrAction = (path : string) => {
+        return {
+            add: ({ count, initialValue } = {}) => inputStore.addArrayItem(path, initialValue, count),
+            remove: (index) => inputStore.removeArrayItem(path, index),
+            pop: () => inputStore.popArrayItem(path),
+        } as ArrayHelpers
+    }
+
     const handleBlur = () => {
         inputStore.stylesStore.disable(name, FieldVisualState.Focus)
         const data = inputStore.getSnapshot().inputData
@@ -138,7 +147,7 @@ const Input = forwardRef<InputRefProps, InputProps>(({
     }
 
     useEffect(() => {
-        onChange?.({ value, setValue })
+        onChange?.({ value, setValue, arrAction })
     }, [value])
 
     useLayoutEffect(() => {

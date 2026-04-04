@@ -1,3 +1,4 @@
+import { ArrayHelpers } from "@/components/ArrayContainer";
 import type { InputStyle } from "../components/InputTemplate";
 import type { TWInputStyleProp } from "./stylesProps";
 
@@ -32,6 +33,7 @@ export interface BaseInputProps< T={}, U={}> {
 export interface OnInputChangeArgs {
   value: string | number
   setValue: (field: FieldProps) => void
+  arrAction?: (path: string) => ArrayHelpers
 }
 
 export type OnInputChange = (args: OnInputChangeArgs) => void

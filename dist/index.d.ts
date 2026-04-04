@@ -1,5 +1,26 @@
 import * as React$1 from 'react';
-import React__default, { CSSProperties, ReactNode, ReactElement, MouseEvent, RefObject } from 'react';
+import React__default, { ReactNode, CSSProperties, ReactElement, MouseEvent, RefObject } from 'react';
+
+interface AddArgs {
+    count?: number;
+    initialValue?: any[];
+}
+interface ArrayHelpers {
+    add: (args?: AddArgs) => void;
+    remove: (index: number) => void;
+    pop: () => void;
+    isLast: (index: number) => boolean;
+}
+interface ArrayContainerProps {
+    name: string;
+    repeat?: number;
+    getKey?: (item: any, index: number) => string;
+    children: (args: {
+        index: number;
+        helpers: ArrayHelpers;
+    }) => ReactNode;
+}
+declare const _default$3: React$1.NamedExoticComponent<ArrayContainerProps>;
 
 interface InputStyle {
     borderWidth: number | string;
@@ -55,6 +76,7 @@ interface BaseInputProps<T = {}, U = {}> {
 interface OnInputChangeArgs {
     value: string | number;
     setValue: (field: FieldProps) => void;
+    arrAction?: (path: string) => ArrayHelpers;
 }
 type OnInputChange = (args: OnInputChangeArgs) => void;
 interface onEnterPressArgs extends OnInputChangeArgs {
@@ -104,27 +126,6 @@ interface NumInputProps extends InputProps {
     stringify?: boolean;
 }
 declare const MemoizedNumInput: React__default.NamedExoticComponent<NumInputProps & React__default.RefAttributes<InputRefProps>>;
-
-interface AddArgs {
-    count?: number;
-    initialValue?: any[];
-}
-interface ArrayHelpers {
-    add: (args?: AddArgs) => void;
-    remove: (index: number) => void;
-    pop: () => void;
-    isLast: (index: number) => boolean;
-}
-interface ArrayContainerProps {
-    name: string;
-    repeat?: number;
-    getKey?: (item: any, index: number) => string;
-    children: (args: {
-        index: number;
-        helpers: ArrayHelpers;
-    }) => ReactNode;
-}
-declare const _default$3: React$1.NamedExoticComponent<ArrayContainerProps>;
 
 interface ObjContainerProps {
     name: string;

@@ -105,18 +105,21 @@ interface NumInputProps extends InputProps {
 }
 declare const MemoizedNumInput: React__default.NamedExoticComponent<NumInputProps & React__default.RefAttributes<InputRefProps>>;
 
+interface AddArgs {
+    count?: number;
+    initialValue?: any[];
+}
 interface ArrayHelpers {
-    add: (item: any) => void;
+    add: (args?: AddArgs) => void;
     remove: (index: number) => void;
+    pop: () => void;
     isLast: (index: number) => boolean;
 }
 interface ArrayContainerProps {
     name: string;
-    items: any[];
-    defaultAddItem?: any;
+    repeat?: number;
     getKey?: (item: any, index: number) => string;
     children: (args: {
-        item: any;
         index: number;
         helpers: ArrayHelpers;
     }) => ReactNode;

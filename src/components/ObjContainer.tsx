@@ -1,4 +1,4 @@
-import { type FC, memo, type ReactNode } from 'react'
+import { type FC, memo, type ReactNode, useMemo } from 'react'
 import { NameScopeContext, useNameScope } from '../context/NameScopeContext';
 
 interface ObjContainerProps {
@@ -16,8 +16,15 @@ const ObjectContainer: FC<ObjContainerProps> = ({
     const parent = useNameScope();
     const scope = parent ? `${parent}.${name}` : name;
 
+    const contextValue = useMemo(() => ({
+            parent: scope,
+            parentType: 'object',
+            // parentIndex: undefined,
+            parentKey: scope.split('.').slice(0, -1).join('.')
+        }), [scope])
+
     return (
-        <NameScopeContext.Provider value={scope}>
+        <NameScopeContext.Provider value={contextValue}>
                 {
                     children
                 }

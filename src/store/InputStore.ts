@@ -193,11 +193,15 @@ export class InputStore {
       ) {
         this.collectKeys(value, path, paths)
       } else if (isArray(value)) {
-        this.arrayItems.set(path, [...value])
-        this.notify(path)
+        const arrayItor = []
+        // this.arrayItems.set(path, [...value])
+        // this.notify(path)
         for (let i = 0; i < value.length; i++) {
+          arrayItor.push(i)
           this.collectKeys(value[i], `${path}.${i}`, paths)
         }
+        this.arrayIterator.set(path, arrayItor)
+        this.notify(path)
       }
       else {
         if (this.listeners.has(path)) {
@@ -268,6 +272,10 @@ export class InputStore {
     this.computedStore.trigger(key)
   }
 
+  setSilentValue(key: string, value: any) {                  ////// SILENT. NO NOTIFICATION
+    this.setNestedValue(this.state.inputData, key, value)
+  }
+
 
   getValue(key: string) {
     return this.getNestedValue(this.state.inputData, key)
@@ -291,7 +299,8 @@ export class InputStore {
       editedKeys: new Set()
     }
     this.currentValue = ""
-    this.arrayItems.clear()
+    this.arrayIterator.clear()
+    this.arrayObject.clear()
     this.sharedContext.clear()
     this.notifyAll()
   }
@@ -304,7 +313,8 @@ export class InputStore {
     }
     this.currentValue = ""
     this.sharedContext.clear()
-    this.arrayItems.clear()
+    this.arrayIterator.clear()
+    this.arrayObject.clear()
   }
 
   private setNestedValue(obj: any, path: string, value: any) {
@@ -348,121 +358,241 @@ export class InputStore {
     }, obj)
   }
 
-  private arrayItems = new Map<string, any[]>()   ////// path -> array items
+  private arrayObject = new Map<string, Set<any>>()
+  private arrayIterator = new Map<string, number[]>()
 
-  getArrayItems(path: string) {
-    const arr = this.arrayItems.get(path)
-    return arr
+  setArrayObject(path: string, value: string) {
+    if (!this.arrayObject.has(path)) {
+      this.arrayObject.set(path, new Set())
+    }
+    this.arrayObject.get(path)?.add(value)
   }
 
-  addArrayItem(path: string, value: any) {
-    const prev = this.arrayItems.get(path) ?? []
+  getArrayItems(path: string) {
+    return this.arrayIterator.get(path)
+  }
+
+  getArrayLength(path: string) {
+    return this.arrayIterator.get(path)?.length ?? 0
+  }
+
+  addItorator(path: string, index: number) {
+    const prev = this.arrayIterator.get(path)
+    if (!isArray(prev)) return
+    if (index <= prev.length - 1) return
+    const next = [...prev, index]
+    this.arrayIterator.set(path, next)
+    // this.notify(path)
+  }
+
+  initArray(path: string, iterator: number[]) {
+    this.arrayIterator.set(path, iterator)
+  }
 
 
-    const next = Array.isArray(value)
-      ? [...prev, ...value]
-      : [...prev, value]
+  replaceArray(path: string, items: Record<string, any>[]) {
+    const currentItor = this.arrayIterator.get(path)
+    if (!currentItor) return
+    const iterator: number[] = []
+    const prevItorSize = currentItor.length
+    const prevArrKeys = this.arrayObject.get(path)
+    this.batch(() => {
+      items!.forEach((value, index) => {
+        if (index < prevItorSize) {
+          prevArrKeys?.forEach((val) => {
+            this.setValue(`${path}.${index}.${val}`, value[val])
+          })
+        } else {
+          prevArrKeys?.forEach((val) => {
+            this.setSilentValue(`${path}.${index}.${val}`, value[val])
+          })
+        }
+        // this.addItorator(path, index)
+        iterator.push(index)
+      })
+      this.arrayIterator.set(path, iterator)
+      this.notify(path)
+    })
+  }
 
-    this.arrayItems.set(path, next)
-    this.notify(path)
+  addArrayItem(path: string, initialValue?: Record<string, any>[], repeat: number = 1) {
+    const currentItor = this.arrayIterator.get(path)
+    if (!currentItor) return
+    const prevItorSize = currentItor.length
+    const newItorArr: number[] = [...currentItor]
+
+    const prevArrKeys = this.arrayObject.get(path)
+    this.batch(() => {
+      for (let i = 0; i < repeat; i++) {
+        const newIndex = prevItorSize + i
+        newItorArr.push(newIndex)
+        prevArrKeys?.forEach((key) => {
+          this.setSilentValue(`${path}.${newIndex}.${key}`, initialValue?.[i]?.[key] ?? "")
+        })
+      }
+      this.arrayIterator.set(path, newItorArr)
+      this.notify(path)
+    })
+  }
+
+  addArrayItems(
+    path: string,
+    items: Record<string, any> | Record<string, any>[],
+    type: 'append' | 'replace' = 'append'
+  ) {
+    const data = this.state.inputData
+    if (!data) return
+
+    const prev = this.getValue(path) ?? []
+
+    const itemsArray = isArray(items) ? items : [items]
+
+    this.batch(() => {
+      let next: Record<string, any>[]
+
+      // 🔥 REPLACE
+      if (type === 'replace') {
+        next = itemsArray
+      }
+      // 🔥 APPEND
+      else {
+        next = [...prev, ...itemsArray]
+      }
+
+      // ✅ set full array
+      this.setSilentValue(path, next)
+
+      // ✅ update iterator (derived)
+      const nextIterator = Array.from({ length: next.length }, (_, i) => i)
+      this.arrayIterator.set(path, nextIterator)
+
+      // 🔥 notify only NEW items (important optimization)
+      if (type === 'append') {
+        const startIndex = prev.length
+
+        for (let i = startIndex; i < next.length; i++) {
+          const item = next[i]
+
+          for (const key in item) {
+            this.notify(`${path}.${i}.${key}`)
+          }
+        }
+      }
+
+      // 🔥 for replace → notify everything
+      else {
+        for (let i = 0; i < next.length; i++) {
+          const item = next[i]
+
+          for (const key in item) {
+            this.notify(`${path}.${i}.${key}`)
+          }
+        }
+      }
+
+      // 🔥 structure update
+      this.notify(path)
+    })
+  }
+
+  getArrayKeys(path: string) {
+    return this.arrayObject.get(path) ?? []
+  }
+
+  getArrayKeySize(path: string) {
+    return this.arrayObject.get(path)?.size ?? 0
   }
 
   removeArrayItem(path: string, index: number) {
-    const prev = this.arrayItems.get(path)
-    if (!Array.isArray(prev)) return
+    const arrData = this.getValue(path)
+    if (!isArray(arrData)) return
 
-    const next = prev.filter((_, i) => i !== index)
-    this.arrayItems.set(path, next)
+    const prev = this.arrayIterator.get(path)
+    if (!prev) return
 
+    const next = prev.slice(0, -1)
+    // this.arrayIterator.set(path, next)
+
+    const length = prev.length
+
+    this.batch(() => {
+      // 🔥 if last index → simple pop
+      if (index === length - 1) {
+        if (index === 0) {
+          for (const key in arrData[0]) {
+            this.setValue(`${path}.0.${key}`, "")
+          }
+          return
+        }
+        arrData.pop()
+        this.setSilentValue(path, arrData)
+
+        // this.arrayIterator.set(path, arrData.map((_, i) => i))
+        this.arrayIterator.set(path, next)
+
+        this.notify(path)
+        return
+      }
+
+      // 🔥 remove + shift
+      const newData = arrData.filter((_, i) => i !== index)
+
+      this.setSilentValue(path, newData)
+
+      // 🔥 notify shifted fields only
+      for (let i = index; i < newData.length; i++) {
+        for (const key in newData[i]) {
+          this.notify(`${path}.${i}.${key}`)
+        }
+      }
+
+      // 🔥 update iterator
+      // this.arrayIterator.set(path, newData.map((_, i) => i))
+      this.arrayIterator.set(path, next)
+
+      this.notify(path)
+    })
+  }
+
+  popArrayItem(path: string, iterator?: number[]) {
+    const prev = iterator ?? this.arrayIterator.get(path)
+    // console.log('going to pop item')
+    if (!isArray(prev)) return
+    const next = prev.slice(0, -1)
+    this.arrayIterator.set(path, next)
     this.notify(path)
+    const arrData = this.getValue(path)
+    if (!isArray(arrData)) return
+    arrData.pop()
   }
 }
 
 
-// registerComputed(
-//   key: string,
-//   deps: string[],
-//   // evaluate: (data: Record<string, any> | null) => boolean
-//   evaluate: (data: Record<string, any> | null) => boolean
-// ) {
+// private arrayItems = new Map<string, any[]>()   ////// path -> array items
 
-//   if (this.computedNodes.has(key)) {
-//     return this.computedNodes.get(key)!
+//   getArrayItems(path: string) {
+//     const arr = this.arrayItems.get(path)
+//     return arr
 //   }
 
-//   const node: ComputedNode = {
-//     deps,
-//     evaluate,
-//     listeners: new Set(),
-//     value: false
+//   addArrayItem(path: string, value: any) {
+//     const prev = this.arrayItems.get(path) ?? []
+
+
+//     const next = Array.isArray(value)
+//       ? [...prev, ...value]
+//       : [...prev, value]
+
+//     this.arrayItems.set(path, next)
+//     this.notify(path)
 //   }
 
-//   node.value = evaluate(this.state.inputData)
+//   removeArrayItem(path: string, index: number) {
+//     const prev = this.arrayItems.get(path)
+//     if (!Array.isArray(prev)) return
 
-//   this.computedNodes.set(key, node)
+//     const next = prev.filter((_, i) => i !== index)
+//     this.arrayItems.set(path, next)
 
-//   /* build dependency graph */
-
-//   deps.forEach(dep => {
-
-//     if (!this.dependencyGraph.has(dep)) {
-//       this.dependencyGraph.set(dep, new Set())
-//     }
-
-//     this.dependencyGraph.get(dep)!.add(node)
-
-//   })
-
-//   return node
-// }
-
-
-
-// private recompute(node: ComputedNode) {
-
-//   const next = node.evaluate(this.state.inputData)
-
-//   if (next === node.value) return
-
-//   node.value = next
-
-//   node.listeners.forEach(cb => cb())
-// }
-
-
-// setValue(key: string, value: any) {
-// const inputData = this.state.inputData
-// if (!inputData) return
-// const prev = this.getNestedValue(inputData, key)
-// if (prev === value) return
-// this.setNestedValue(inputData, key, value)
-// this.notify(key)
-// // if (!this.isEditMode) return
-// if (this.isEditMode) {
-//   const initial = this.getNestedValue(this.state.initialData, key)
-//   if (initial === undefined) this.setNestedValue(this.state.initialData, key, value)
-//   const wasEdited = this.state.editedKeys.has(key)
-//   const isEdited = value !== initial
-//   if (isEdited) {
-//     this.state.editedKeys.add(key)
+//     this.notify(path)
 //   }
-//   else this.state.editedKeys.delete(key)
-//   if (wasEdited !== isEdited) {
-//     if (isEdited) {
-//       this.styles.enable(key, 'edited')
-//     } else {
-//       this.styles.disable(key, 'edited')
-//     }
-//   }
-// }
-
-// this.computedStore.trigger(key)
-/* recompute dependent expressions */
-
-// const computed = this.dependencyGraph.get(key)
-
-// if (!computed) return
-
-
-// computed.forEach(node => this.recompute(node))
-// }

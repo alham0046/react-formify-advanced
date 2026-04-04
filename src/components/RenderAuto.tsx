@@ -30,11 +30,12 @@ export const RenderField = (
       <ArrayContainer
         key={key}
         name={key}
-        items={value}
+        // items={value}
+        repeat={value.length}
         getKey={(i) => i.toString()}
       >
-        {(item) => (
-          <AutoInput initialData={item} />
+        {({index}) => (
+          <AutoInput initialData={value[index]} />
         )}
       </ArrayContainer>
     )

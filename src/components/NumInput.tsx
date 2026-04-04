@@ -17,7 +17,7 @@ interface NumInputProps extends InputProps {
 const NumInput = forwardRef<InputRefProps, NumInputProps>(({ ...props }, ref) => {
     const { placeholder, name, children, style, twStyle, onDisableChange, initialValue = "", required = false, disabled = false, hideElement = false, privacy = false, stringify = false, ...rest } = props
     const { inputStore } = useContainerContext()
-    const modifiedName = useFieldName(placeholder, name)
+    const modifiedName = useFieldName(placeholder, name, inputStore)
 
     useEffect(() => {
         handleInitialValue(modifiedName, initialValue, inputStore)

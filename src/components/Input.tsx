@@ -5,6 +5,7 @@ import { FieldVisualState } from '../Config/FieldVisualState'
 import { useFormLayout } from '../context/LabelLayoutContext'
 import { useContainerContext } from '../context/ContainerContext'
 import { FieldProps, OnBlur, OnEnterPress, OnInputChange } from '../typeDeclaration/baseProps'
+import { isArray } from '@/functions/dataTypesValidation'
 
 type NonEnterKey = Exclude<React.KeyboardEvent<HTMLInputElement>['key'], 'Enter'>
 
@@ -61,7 +62,7 @@ const Input = forwardRef<InputRefProps, InputProps>(({
     inputInlineStyle
 }, ref) => {
     const inputRef = useRef<HTMLInputElement>(null)
-    const {inputStore} = useContainerContext()
+    const { inputStore } = useContainerContext()
     const { labelMode } = useFormLayout()
     const value: string | number = fixedValue ?? useInputStore(name, inputStore) ?? ""
     const handlePreInput = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -95,10 +96,24 @@ const Input = forwardRef<InputRefProps, InputProps>(({
         }
     }))
 
+    // const setValue = (FieldCredentials: FieldProps) => {
+    //     const keys = Object.keys(FieldCredentials);
+    //     for (const key of keys) {
+    //         inputStore.setValue(key, FieldCredentials[key])
+    //     }
+    // }
+
     const setValue = (FieldCredentials: FieldProps) => {
         const keys = Object.keys(FieldCredentials);
         for (const key of keys) {
-            inputStore.setValue(key, FieldCredentials[key])
+            const value = FieldCredentials[key]
+            if (isArray(value)) {
+                // inputStore.setSilentValue(key, value)
+                inputStore.replaceArray(key, value)
+            }
+            else {
+                inputStore.setValue(key, FieldCredentials[key])
+            }
         }
     }
 
@@ -123,7 +138,7 @@ const Input = forwardRef<InputRefProps, InputProps>(({
     }
 
     useEffect(() => {
-        onChange?.({value, setValue})
+        onChange?.({ value, setValue })
     }, [value])
 
     useLayoutEffect(() => {

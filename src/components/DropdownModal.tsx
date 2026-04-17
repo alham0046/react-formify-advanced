@@ -95,6 +95,7 @@ const DropdownModal: FC<DropdownModalProps> = ({
             onClick={openDropdown}
             // onKeyDown={handleKeyDown}
             onFocus={openDropdown}
+            onBlur={closeDropdown}
             tabIndex={0} // Makes the div focusable for keyboard navigation
             // style={inputInlineStyle}
             // className={`relative w-full flex input-border justify-between items-center rounded-lg outline-none bg-transparent ${twInputStyles}`}

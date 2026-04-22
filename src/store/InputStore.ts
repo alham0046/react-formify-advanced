@@ -565,6 +565,20 @@ export class InputStore {
     if (!isArray(arrData)) return
     arrData.pop()
   }
+
+  private submitHandler: null | ((e?: any) => void | Promise<void>) = null
+
+  registerSubmit(handler: (e?: any) => void | Promise<void>) {
+    this.submitHandler = handler
+  }
+
+  unregisterSubmit() {
+    this.submitHandler = null
+  }
+
+  triggerSubmit(e?: any) {
+    this.submitHandler?.(e)
+  }
 }
 
 

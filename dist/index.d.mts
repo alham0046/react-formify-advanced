@@ -82,6 +82,7 @@ type OnInputChange = (args: OnInputChangeArgs) => void;
 interface onEnterPressArgs extends OnInputChangeArgs {
     stopPropagation: () => void;
     data: Record<string, any>;
+    submit?: () => void;
 }
 type OnEnterPress = (args: onEnterPressArgs) => void;
 interface OnBlurArgs extends OnInputChangeArgs {

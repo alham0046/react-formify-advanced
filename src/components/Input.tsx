@@ -140,7 +140,7 @@ const Input = forwardRef<InputRefProps, InputProps>(({
         const stopPropagation = event.stopPropagation
         if (event.key === 'Enter') {
             const data = inputStore.getSnapshot().inputData
-            onEnterPress?.({ value: value ?? "", data: data as Record<string, any>, stopPropagation, setValue })
+            onEnterPress?.({ value: value ?? "", data: data as Record<string, any>, stopPropagation, setValue, submit : inputStore.triggerSubmit })
             return
         }
         onKeyDown?.(event as NonEnterKeyboardEvent)

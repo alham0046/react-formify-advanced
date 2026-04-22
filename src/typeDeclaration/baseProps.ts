@@ -41,6 +41,8 @@ export type OnInputChange = (args: OnInputChangeArgs) => void
 export interface onEnterPressArgs extends OnInputChangeArgs {
   stopPropagation: () => void
   data: Record<string, any>
+  // submit?: null | ((e?: any) => void | Promise<void>)
+  submit?: () => void
 }
 
 export type OnEnterPress = (args: onEnterPressArgs) => void

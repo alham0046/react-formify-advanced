@@ -1,4 +1,4 @@
-import React, { forwardRef, memo, type MouseEvent, type MouseEventHandler, type ReactElement, type ReactNode, useCallback, useImperativeHandle, useState } from 'react'
+import React, { forwardRef, memo, type MouseEvent, type MouseEventHandler, type ReactElement, type ReactNode, useCallback, useEffect, useImperativeHandle, useState } from 'react'
 import { getEditedData } from '../Utils/getEditedData';
 import { useContainerContext } from '../context/ContainerContext';
 import type { OnSubmit } from '../typeDeclaration/inputProps';
@@ -90,7 +90,7 @@ const SubmitButton = forwardRef<SubmitButtonRef, SubmitProps>((
     if (onClick) {
       // const shouldOpenModal = await onClick({ data, edited, resetForm, stopPropagation : () => e.stopPropagation(), preventDefault : () => e.preventDefault() })
       const shouldOpenModal = await Promise.resolve(
-        onClick({ data, edited, resetForm, clearForm, stopPropagation : () => e.stopPropagation(), preventDefault : () => e.preventDefault() })
+        onClick({ data, edited, resetForm, clearForm, stopPropagation: () => e.stopPropagation(), preventDefault: () => e.preventDefault() })
       )
 
       if (shouldOpenModal && renderConfirmationModel) {
@@ -98,6 +98,15 @@ const SubmitButton = forwardRef<SubmitButtonRef, SubmitProps>((
       }
     }
   }, [onClick, disabled, openModal, renderConfirmationModel])
+
+  useEffect(() => {
+    inputStore.registerSubmit(handleSubmit)
+
+    return () => {
+      // inputStore.registerSubmit(null)
+      inputStore.unregisterSubmit()
+    }
+  }, [handleSubmit])
 
   // 🔑 Expose submit() safely
   useImperativeHandle(ref, () => ({
@@ -120,7 +129,7 @@ const SubmitButton = forwardRef<SubmitButtonRef, SubmitProps>((
                 {typeof renderConfirmationModel === 'function'
                   ? renderConfirmationModel({ cancel, success, resetForm, clearForm, data: getSnapshot(), isDisabled })
                   : React.isValidElement(renderConfirmationModel)
-                    ? React.cloneElement(renderConfirmationModel, { cancel, success,clearForm, resetForm, data: getSnapshot(), isDisabled })
+                    ? React.cloneElement(renderConfirmationModel, { cancel, success, clearForm, resetForm, data: getSnapshot(), isDisabled })
                     : null}
               </div>
             </div>

@@ -118,7 +118,7 @@ const Input = forwardRef<InputRefProps, InputProps>(({
         }
     }
 
-    const arrAction = (path : string) => {
+    const arrAction = (path: string) => {
         return {
             add: ({ count, initialValue } = {}) => inputStore.addArrayItem(path, initialValue, count),
             remove: (index) => inputStore.removeArrayItem(path, index),
@@ -137,10 +137,16 @@ const Input = forwardRef<InputRefProps, InputProps>(({
     }
 
     const handleKeyPresses = (event: React.KeyboardEvent<HTMLInputElement>) => {
-        const stopPropagation = event.stopPropagation
+        const stopPropagation = () => event.stopPropagation()
         if (event.key === 'Enter') {
             const data = inputStore.getSnapshot().inputData
-            onEnterPress?.({ value: value ?? "", data: data as Record<string, any>, stopPropagation, setValue, submit : inputStore.triggerSubmit })
+            onEnterPress?.({
+                value: value ?? "",
+                data: data as Record<string, any>,
+                stopPropagation,
+                setValue,
+                submit: () => inputStore.triggerSubmit(event)
+            })
             return
         }
         onKeyDown?.(event as NonEnterKeyboardEvent)

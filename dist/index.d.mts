@@ -20,7 +20,7 @@ interface ArrayContainerProps {
         helpers: ArrayHelpers;
     }) => ReactNode;
 }
-declare const _default$3: React$1.NamedExoticComponent<ArrayContainerProps>;
+declare const _default$4: React$1.NamedExoticComponent<ArrayContainerProps>;
 
 interface InputStyle {
     borderWidth: number | string;
@@ -183,6 +183,15 @@ interface DisabledInputProps {
 }
 declare const MemoizedDisabledInput: React$1.NamedExoticComponent<DisabledInputProps>;
 
+interface RunningTextProps {
+    children: React__default.ReactNode;
+    width?: string;
+    className?: string;
+    speed?: number;
+    maxAutoSpeed?: number;
+}
+declare const _default$3: React__default.NamedExoticComponent<RunningTextProps>;
+
 interface FormRowProps {
     label: React.ReactNode;
     separator?: React.ReactNode;
@@ -287,4 +296,10 @@ declare const formGlobalAction: (formId: string) => {
     clearForm: () => void;
 };
 
-export { _default$3 as ArrayContainer, MemoizedAutoInput as AutoInput, type ConfirmationRenderProps, memoizedDateInput as DateInput, MemoizedDisabledInput as DisabledInput, _default$2 as FormRow, _default as InputContainer, MemoizedNumInput as NumInput, MemoizedObjectContainer as ObjectContainer, type OnBlur, type OnBlurArgs, type OnEnterPress, type OnInputChange, type OnInputChangeArgs, type OnSubmit, type OnSubmitArgs, _default$1 as SearchInput, MemoizedSelectInput as SelectInput, MemoizedStrInput as StrInput, MemoizedSubmitButton as SubmitButton, type SubmitButtonRef, clearForm, formGlobalAction, type onEnterPressArgs, resetForm, setEditData, setFieldValue, sharedMemory };
+declare const useFormActions: () => {
+    setValue: (FieldCredentials: FieldProps) => void;
+    submit: () => void;
+    reset: () => void;
+};
+
+export { _default$4 as ArrayContainer, MemoizedAutoInput as AutoInput, type ConfirmationRenderProps, memoizedDateInput as DateInput, MemoizedDisabledInput as DisabledInput, _default$2 as FormRow, _default as InputContainer, MemoizedNumInput as NumInput, MemoizedObjectContainer as ObjectContainer, type OnBlur, type OnBlurArgs, type OnEnterPress, type OnInputChange, type OnInputChangeArgs, type OnSubmit, type OnSubmitArgs, _default$3 as RunningText, _default$1 as SearchInput, MemoizedSelectInput as SelectInput, MemoizedStrInput as StrInput, MemoizedSubmitButton as SubmitButton, type SubmitButtonRef, clearForm, formGlobalAction, type onEnterPressArgs, resetForm, setEditData, setFieldValue, sharedMemory, useFormActions };

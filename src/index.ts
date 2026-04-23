@@ -8,11 +8,13 @@ export { default as SelectInput } from './components/SelectInput'
 export { default as AutoInput } from './components/AutoInput'
 export { default as DateInput } from './components/DateInput'
 export { default as DisabledInput } from './components/DisabledInput';
+export { default as RunningText } from './components/RunningText'
 export { default as FormRow } from './components/FormRow';
-export {default as SearchInput} from './components/SearchInput'
+export { default as SearchInput } from './components/SearchInput'
 export { default as SubmitButton, type ConfirmationRenderProps, type SubmitButtonRef } from './components/SubmitButton';
 export { default as InputContainer } from './components/InputContainer';
-export type {OnSubmit, OnSubmitArgs} from './typeDeclaration/inputProps'
-export type {OnBlur, OnEnterPress, OnInputChange, OnBlurArgs, OnInputChangeArgs, onEnterPressArgs} from './typeDeclaration/baseProps'
-export {sharedMemory} from './store/sharedMemory'
-export {clearForm, formGlobalAction, resetForm, setEditData, setFieldValue} from './Utils/GlobalFromAction'
+export type { OnSubmit, OnSubmitArgs } from './typeDeclaration/inputProps'
+export type { OnBlur, OnEnterPress, OnInputChange, OnBlurArgs, OnInputChangeArgs, onEnterPressArgs } from './typeDeclaration/baseProps'
+export { sharedMemory } from './store/sharedMemory'
+export { clearForm, formGlobalAction, resetForm, setEditData, setFieldValue } from './Utils/GlobalFromAction'
+export { useFormActions } from './hooks/useFormActions'

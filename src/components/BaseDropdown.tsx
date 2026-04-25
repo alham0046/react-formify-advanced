@@ -122,39 +122,13 @@ const BaseDropdown: React.FC<BaseDropdownProps> = ({
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [open, modalRef]);
-  // }, [open, onSelect, handleKeyDown, close, reset, inputRef]);
-  // useEffect(() => {
-  //   if (!open) return;
-
-  //   const handleGlobalKeyDown = (e: KeyboardEvent) => {
-  //     if (["ArrowUp", "ArrowDown", "Enter", "Escape"].includes(e.key)) {
-  //       handleKeyDown(e, onSelect);
-  //     }
-  //   };
-
-  //   const handleClickOutside = (event: MouseEvent) => {
-  //     if (inputRef.current && !inputRef.current.contains(event.target as Node) &&
-  //         modalRef.current && !modalRef.current.contains(event.target as Node)) {
-  //       reset();
-  //       close();
-  //     }
-  //   };
-
-  //   window.addEventListener("keydown", handleGlobalKeyDown);
-  //   document.addEventListener("mousedown", handleClickOutside);
-    
-  //   return () => {
-  //     window.removeEventListener("keydown", handleGlobalKeyDown);
-  //     document.removeEventListener("mousedown", handleClickOutside);
-  //   };
-  // }, [open, onSelect, handleKeyDown, close, reset, inputRef]);
 
   if (!open) return null;
 
   return createPortal(
     <div
       ref={modalRef}
-      className={`fixed z-50 top-0 left-0 ${twOptionBoxStyles}`}
+      className={`fixed z-2000 top-0 left-0 ${twOptionBoxStyles}`}  /////// also must give zIndex as prop in SelectInput in future to avoid z-index conflict with modals and tooltips
       // Ensure visibility is 'hidden' initially so it doesn't flicker at (0,0)
       style={{ 
         visibility: 'hidden', 

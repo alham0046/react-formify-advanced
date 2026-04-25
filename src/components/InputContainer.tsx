@@ -1,4 +1,4 @@
-import { type CSSProperties, type FC, type ReactNode, type RefObject, useLayoutEffect, useMemo, useRef } from 'react'
+import { type CSSProperties, type FC, type ReactNode, type RefObject, useEffect, useLayoutEffect, useMemo, useRef } from 'react'
 import { memo } from 'react'
 import type { FieldVisualState } from '../Config/FieldVisualState';
 import { normalizeDefault } from '../Config/configStore';
@@ -8,7 +8,7 @@ import type { TWInputStyleProp } from '../typeDeclaration/stylesProps';
 import { resolveTwStyles } from '../Utils/resolveTwStyles';
 import { randomString } from '../functions/stringManiputation';
 import { InputStore } from '../store/InputStore';
-import { getOrCreateFormStore } from '../store/InputStoreRegistry';
+import { getOrCreateFormStore, unregisterForm } from '../store/InputStoreRegistry';
 import { DEFAULT_INPUT_STYLE, TW_DEFAULT_INPUT_STYLE } from '../styles/InputStyles';
 import { DEFAULT_DROPDOWN_STYLE, TW_DEFAULT_DROPDOWN_STYLE } from '../styles/DropdownStyles';
 
@@ -110,8 +110,14 @@ const InputContainer: FC<InputContainerProps> = ({ children, className, style, f
     return () => {
       // inputStore.clear()
       storeRef.current?.reset()
+
     }
   }, []);
+
+  useEffect(() => {
+    return () => unregisterForm(id)
+  }, [id])
+
 
   return (
     <ContainerContext.Provider value={contextValue}>

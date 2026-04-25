@@ -66,7 +66,7 @@ const SelectInput: FC<SelectProps> = ({
         }
     }, [disabledValue])
 
-    const staticOptions = useSelectOptions({
+    const optionObject = useSelectOptions({
         options,
         dependsOn,
         optionsMap,
@@ -97,7 +97,7 @@ const SelectInput: FC<SelectProps> = ({
                 >
                     <DropdownModal
                         onSelect={handleSelect}
-                        options={staticOptions}
+                        options={optionObject}
                         name={modifiedName}
                         style={resolvedStyle}
                         twStyle={tw}

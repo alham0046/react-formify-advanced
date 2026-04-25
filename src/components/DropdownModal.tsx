@@ -14,7 +14,8 @@ interface DropdownOption {
     value: string;
 }
 interface DropdownModalProps {
-    options: DropdownOption[];
+    // options: DropdownOption[];
+    options: {optionsList: DropdownOption[], valueToLabel : Map<string, string>}
     onSelect: (value: string) => void;
     disabled: boolean;
     searchable: boolean;
@@ -41,6 +42,7 @@ const DropdownModal: FC<DropdownModalProps> = ({
     twStyle,
     modalContainerRef,
 }) => {
+    const {optionsList, valueToLabel} = options
     const {inputStore} = useContainerContext()
     const value: string = useInputStore(name, inputStore)
     const rotateRef = useRef<RotatingDropdownRef>(null)
@@ -106,7 +108,7 @@ const DropdownModal: FC<DropdownModalProps> = ({
                 className={`input-border cursor-pointer ${twInputStyles}`}
                 style={inputInlineStyle}
             >
-                {value || initialLabel || 'Select an Option'}
+                {valueToLabel.get(value) || initialLabel || 'Select an Option'}
             </div>
             <div className="absolute right-4 top-1/2 transform -translate-y-1/2"><RotatingDropdown ref={rotateRef} /></div>
             {isOpen && (
@@ -114,7 +116,7 @@ const DropdownModal: FC<DropdownModalProps> = ({
                     open={isOpen}
                     name={name}
                     twOptionBoxStyles={twOptionBoxStyles}
-                    options={options}
+                    options={optionsList}
                     close={closeDropdown}
                     value={value}
                     onSelect={(opt) => {

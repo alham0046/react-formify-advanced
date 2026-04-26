@@ -268,6 +268,7 @@ interface InputContainerProps {
     className?: string;
     formId?: string;
     mode?: "default" | "edit";
+    initialData?: Record<string, any>;
     colorScheme?: FieldVisualState[];
     sharedStyles?: Partial<InputStyle>;
     sharedTwStyles?: Partial<TWInputStyleProp>;

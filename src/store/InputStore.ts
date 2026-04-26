@@ -1,5 +1,5 @@
 import type React from "react";
-import { isArray } from "../functions/dataTypesValidation";
+import { isArray, isEmptyObject } from "../functions/dataTypesValidation";
 import { InputStyles } from "./InputStyles";
 import { isIndex } from "../Utils/inputStoreUtils";
 import { Validator } from "./validatorStore";
@@ -153,9 +153,21 @@ export class InputStore {
     return this.state
   }
 
-  initializeInputStore(mode: "edit" | "default") {
+  private pendingInitialData = new Map<string, any>()
+
+  getPendingInitialData(key: string) {
+    const value = this.pendingInitialData.get(key)
+    if (!value) return
+    this.pendingInitialData.delete(key)
+    return value
+  }
+
+  initializeInputStore(mode: "edit" | "default", initialData: Record<string, any>) {
     this.state.inputData = {}
     if (mode === "edit") this.isEditMode = true
+    if (isEmptyObject(initialData)) return
+    console.log("initializing input store", initialData)
+    this.pendingInitialData = new Map(Object.entries(initialData))
   }
 
   setBackgroundColor(color: string) {

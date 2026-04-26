@@ -2,7 +2,8 @@ import type { InputStore } from "../store/InputStore";
 
 export const handleInitialValue = (name: string, initialValue: string, inputStore: InputStore, isDisabledInput: boolean = false) => {
     const existingValue = inputStore.getValue(name);
-    const value = existingValue || initialValue
+    const pendingValue = inputStore.getPendingInitialData(name);
+    const value = existingValue || initialValue || pendingValue
     inputStore.setFieldInitialData(name, value, isDisabledInput)
 }
 

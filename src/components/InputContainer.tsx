@@ -18,13 +18,14 @@ interface InputContainerProps {
   className?: string
   formId?: string
   mode?: "default" | "edit"
+  initialData?: Record<string, any>
   colorScheme?: FieldVisualState[]
   sharedStyles?: Partial<InputStyle>
   sharedTwStyles?: Partial<TWInputStyleProp>
   modalContainerRef?: RefObject<HTMLDivElement>
 }
 
-const InputContainer: FC<InputContainerProps> = ({ children, className, style, formId, sharedStyles, sharedTwStyles, modalContainerRef, colorScheme, mode = "default" }) => {
+const InputContainer: FC<InputContainerProps> = ({ children, className, style, formId, sharedStyles, sharedTwStyles, modalContainerRef, colorScheme, mode = "default", initialData = {} }) => {
 
   const randomId = randomString()
 
@@ -41,7 +42,7 @@ const InputContainer: FC<InputContainerProps> = ({ children, className, style, f
   const initialRender = useRef(true)
 
   if (initialRender.current) {
-    storeRef.current.initializeInputStore(mode)
+    storeRef.current.initializeInputStore(mode, initialData)
     if (colorScheme) {
       colorScheme.forEach((state: FieldVisualState) => {
         if (typeof state !== "string") return

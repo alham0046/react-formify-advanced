@@ -1,4 +1,4 @@
-import React, { forwardRef, memo, useEffect } from 'react'
+import React, { forwardRef, memo, useEffect, useRef } from 'react'
 // import { useInputStore } from '../../../Hooks/useInputStore'
 import { type InputProps, type InputRefProps } from "../typeDeclaration/inputProps";
 import { useComputedExpression } from "../hooks/useComputedExpression";
@@ -19,9 +19,14 @@ const NumInput = forwardRef<InputRefProps, NumInputProps>(({ ...props }, ref) =>
     const { inputStore } = useContainerContext()
     const modifiedName = useFieldName(placeholder, name, inputStore)
 
-    useEffect(() => {
+    const hasRendered = useRef<boolean>(false)
+    if (!hasRendered.current) {
         handleInitialValue(modifiedName, initialValue, inputStore)
-    }, [])
+        hasRendered.current = true
+    }
+    // useEffect(() => {
+    //     handleInitialValue(modifiedName, initialValue, inputStore)
+    // }, [])
 
     useEffect(() => {
         inputStore.validatorStore.register(modifiedName, { required, validators: [] })

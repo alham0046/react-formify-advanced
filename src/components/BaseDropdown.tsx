@@ -1,10 +1,13 @@
-import React, { memo, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react"
+import React, { memo, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react"
 import { useDropdownNavigation } from "../hooks/useDropdownNavigation"
 import { useDropdownPosition } from "../hooks/useDropdownPosition"
 import DropdownItem from "./DropdownItem";
 import { useDropdownContext } from "../context/DropdownContext";
 import { createPortal } from "react-dom";
 import { keyboardAction } from "../Utils/keyboardAction";
+import { useContainerContext } from "../context/ContainerContext";
+import { useInputStore } from "../hooks/useInputStore";
+import { useOptions } from "../hooks/DropdownHooks";
 
 export interface DropdownOption {
   label: string;
@@ -13,11 +16,11 @@ export interface DropdownOption {
 
 export interface BaseDropdownProps {
   open: boolean
-  options: DropdownOption[] | string[]
+  options?: DropdownOption[] | string[]
   name : string
   twOptionBoxStyles: string
   onSelect: (item: string | DropdownOption) => void
-  value?: string
+  // value?: string
   inputRef: React.RefObject<HTMLDivElement | null>
   close: () => void
   dropdownOffset?: number
@@ -47,16 +50,20 @@ const BaseDropdown: React.FC<BaseDropdownProps> = ({
   onSelect,
   close,
   renderItem,
-  value,
+  // value,
   inputRef,
   dropdownOffset = 0,
   searchable,
   onSearchChange,
 }) => {
-  const [search, setSearch] = useState('');
+  // const [search, setSearch] = useState('');
   // const { name, twStyle } = useDropdownContext();
   const modalRef = useRef<HTMLDivElement>(null);
   const searchRef = useRef<HTMLInputElement>(null);
+  const {inputStore} = useContainerContext()
+  const value = useInputStore(name, inputStore)
+
+  const filteredOptions = options || useOptions(name)
 
   // 1. Handle Positioning
   const { calculatePosition } = useDropdownPosition({
@@ -67,13 +74,13 @@ const BaseDropdown: React.FC<BaseDropdownProps> = ({
   });
 
   // 2. Filter Options (Memoized)
-  const filteredOptions = useMemo(() => {
-    if (!search) return options;
-    const lowered = search.toLowerCase();
-    return options.filter((opt) => 
-      (opt as DropdownOption).label.toLowerCase().includes(lowered)
-    );
-  }, [search, options]);
+  // const filteredOptions = useMemo(() => {
+  //   if (!search) return options;
+  //   const lowered = search.toLowerCase();
+  //   return options.filter((opt) => 
+  //     (opt as DropdownOption).label.toLowerCase().includes(lowered)
+  //   );
+  // }, [search, options]);
 
   const {
     highlightIndexRef,
@@ -123,6 +130,12 @@ const BaseDropdown: React.FC<BaseDropdownProps> = ({
     };
   }, [open, modalRef]);
 
+  const handleSearchChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value
+    inputStore.optionGraph.setSearch(name, value)
+    onSearchChange?.(value)
+  }, [name, inputStore, onSearchChange])
+
   if (!open) return null;
 
   return createPortal(
@@ -142,12 +155,8 @@ const BaseDropdown: React.FC<BaseDropdownProps> = ({
           <input
             id={`search_${name}`}
             ref={searchRef}
-            value={search}
-            onChange={(e) => {
-              reset();
-              setSearch(e.target.value);
-              onSearchChange?.(e.target.value);
-            }}
+            // value={search}
+            onChange={handleSearchChange}
             className="w-full p-2 px-3 py-1 border rounded"
             placeholder="Search..."
           />

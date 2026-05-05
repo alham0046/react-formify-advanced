@@ -1,4 +1,4 @@
-import { type FC, memo, useEffect } from 'react';
+import { type FC, memo, useEffect, useRef } from 'react';
 import InputTemplate, { type InputStyle } from './InputTemplate';
 import { useFieldName } from '../hooks/useFieldName';
 import { handleInitialValue } from '../Utils/setInitialValue';
@@ -37,9 +37,15 @@ const DisabledInput: FC<DisabledInputProps> = ({
 
     const { inputStore } = useContainerContext()
 
-    useEffect(() => {
-        handleInitialValue(modifiedName, initialValue, inputStore, true)
-    }, [])
+    const hasRendered = useRef<boolean>(false)
+    if (!hasRendered.current) {
+        handleInitialValue(modifiedName, initialValue, inputStore)
+        hasRendered.current = true
+    }
+
+    // useEffect(() => {
+    //     handleInitialValue(modifiedName, initialValue, inputStore, true)
+    // }, [])
 
     const { resolvedStyle, tw } = useStyles(style, twStyle!)
 

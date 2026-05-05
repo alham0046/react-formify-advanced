@@ -7,6 +7,7 @@ import type { InputStyle } from "./InputTemplate";
 import BaseDropdown from "./BaseDropdown";
 import RotatingDropdown, { type RotatingDropdownRef } from "../Icons/RotatingDropdown";
 import { useContainerContext } from "../context/ContainerContext";
+import DropdownLabel from "./DropdownLabel";
 
 
 interface DropdownOption {
@@ -15,7 +16,7 @@ interface DropdownOption {
 }
 interface DropdownModalProps {
     // options: DropdownOption[];
-    options: {optionsList: DropdownOption[], valueToLabel : Map<string, string>}
+    // options: {optionsList: DropdownOption[], valueToLabel : Map<string, string>}
     onSelect: (value: string) => void;
     disabled: boolean;
     searchable: boolean;
@@ -31,7 +32,7 @@ interface DropdownModalProps {
 }
 
 const DropdownModal: FC<DropdownModalProps> = ({
-    options,
+    // options,
     onSelect,
     onToggleDropdown,
     disabled,
@@ -42,9 +43,9 @@ const DropdownModal: FC<DropdownModalProps> = ({
     twStyle,
     modalContainerRef,
 }) => {
-    const {optionsList, valueToLabel} = options
+    // const {optionsList, valueToLabel} = options
     const {inputStore} = useContainerContext()
-    const value: string = useInputStore(name, inputStore)
+    // const value: string = useInputStore(name, inputStore)
     const rotateRef = useRef<RotatingDropdownRef>(null)
     const [isOpen, setIsOpen] = useState(false);
     // const [label, setLabel] = useState(value ||'Select an Option');
@@ -74,6 +75,9 @@ const DropdownModal: FC<DropdownModalProps> = ({
 
     useEffect(() => {
         onToggleDropdown?.(isOpen);
+        if (!isOpen) {
+            inputStore.optionGraph.setSearch(name, "")   
+        }
     }, [isOpen])
 
 
@@ -98,21 +102,22 @@ const DropdownModal: FC<DropdownModalProps> = ({
             className={`relative outline-none`}
             // className={`relative outline-none ${twInputStyles}`}
         >
-            <div
+          <DropdownLabel initialLabel={initialLabel} name={name} twInputStyles={twInputStyles} inputInlineStyle={inputInlineStyle} inputStore={inputStore} />
+            {/* <div
                 className={`input-border cursor-pointer ${twInputStyles}`}
                 style={inputInlineStyle}
             >
                 {valueToLabel.get(value) || initialLabel || 'Select an Option'}
-            </div>
+            </div> */}
             <div className="absolute right-4 top-1/2 transform -translate-y-1/2"><RotatingDropdown ref={rotateRef} /></div>
             {isOpen && (
                 <BaseDropdown
                     open={isOpen}
                     name={name}
                     twOptionBoxStyles={twOptionBoxStyles}
-                    options={optionsList}
+                    // options={optionsList}
                     close={closeDropdown}
-                    value={value}
+                    // value={value}
                     onSelect={(opt) => {
                       handleOptionSelect(opt as DropdownOption)
                     }}
@@ -151,7 +156,8 @@ const DropdownModal: FC<DropdownModalProps> = ({
     )
 }
 
-export default memo(DropdownModal, (prev, next) => shallowOrDeepEqual(prev.options, next.options))
+export default memo(DropdownModal)
+// export default memo(DropdownModal, (prev, next) => shallowOrDeepEqual(prev.options, next.options))
 // export default memo(DropdownModal)
 // export default memo(DropdownModal, (prev, next) => isEqual(prev.options, next.options))
 

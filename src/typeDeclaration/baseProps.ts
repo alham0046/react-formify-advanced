@@ -1,6 +1,7 @@
 import { ArrayHelpers } from "@/components/ArrayContainer";
 import type { InputStyle } from "../components/InputTemplate";
 import type { TWInputStyleProp } from "./stylesProps";
+import { DropdownOption } from "@/components/BaseDropdown";
 
 export interface BaseInputProps< T={}, U={}> {
     placeholder: string;
@@ -34,6 +35,7 @@ export interface OnInputChangeArgs {
   value: string | number
   setValue: (field: FieldProps) => void
   arrAction?: (path: string) => ArrayHelpers
+  setOptions: (name : string, options: string[] | DropdownOption[], initialValue?: string) => void
 }
 
 export type OnInputChange = (args: OnInputChangeArgs) => void

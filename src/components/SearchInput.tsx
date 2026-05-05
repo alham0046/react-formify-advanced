@@ -11,6 +11,7 @@ import type { DropdownStyleProp, TWDropdownStyleProp, TWInputStyleProp } from ".
 import { DropdownContext } from "../context/DropdownContext"
 import { useStyles } from "../hooks/useStylingMods"
 import { FieldProps, OnInputChange } from "@/typeDeclaration/baseProps"
+import { useFormHelpers } from "@/hooks/useFormActions"
 type SearchOnChange<T> = (
     value: string | number
 ) => T[] | Promise<T[]>
@@ -31,9 +32,16 @@ const SearchInput = forwardRef<InputRefProps, SearchInputProps<any>>(({ ...props
     // const [search, setSearch] = useState<any[]>([])
     const timeOutObj = useRef<any>(null)
     const modifiedName = useFieldName(placeholder, name)
-    useEffect(() => {
+    const hasRendered = useRef<boolean>(false)
+    if (!hasRendered.current) {
         handleInitialValue(modifiedName, initialValue, inputStore)
-    }, [])
+        hasRendered.current = true
+    }
+
+    const {setValue, setOptions} = useFormHelpers()
+    // useEffect(() => {
+    //     handleInitialValue(modifiedName, initialValue, inputStore)
+    // }, [])
 
     const { resolvedStyle, tw } = useStyles(style, twStyle!, "dropdown")
 
@@ -49,24 +57,25 @@ const SearchInput = forwardRef<InputRefProps, SearchInputProps<any>>(({ ...props
         timeOutObj.current = setTimeout(async () => {
             // setSearch(value as string)
             const searchedData = await onChange(changedValue)
+            inputStore.optionGraph.set(`d_${modifiedName}`, searchedData)
             inputStore.setDropdownSearch(`d_${modifiedName}`, searchedData)
             // setSearch(searchedData)
         }, 800);
         inputStore.setValue(modifiedName, changedValue)
     }
 
-    const setValue = (FieldCredentials: FieldProps) => {
-        const keys = Object.keys(FieldCredentials);
-        for (const key of keys) {
-            inputStore.setValue(key, FieldCredentials[key])
-        }
-    }
+    // const setValue = (FieldCredentials: FieldProps) => {
+    //     const keys = Object.keys(FieldCredentials);
+    //     for (const key of keys) {
+    //         inputStore.setValue(key, FieldCredentials[key])
+    //     }
+    // }
 
 
     const handleSelect = (value: string) => {
         // onChange(value)
         inputStore.setValue(modifiedName, value)
-        onSelect?.({value, setValue})
+        onSelect?.({value, setValue, setOptions})
 
         // setSearch([])
     }

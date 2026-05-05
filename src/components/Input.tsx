@@ -7,6 +7,7 @@ import { useContainerContext } from '../context/ContainerContext'
 import { FieldProps, OnBlur, OnEnterPress, OnInputChange } from '../typeDeclaration/baseProps'
 import { isArray } from '@/functions/dataTypesValidation'
 import { ArrayHelpers } from './ArrayContainer'
+import { useFormHelpers } from '@/hooks/useFormActions'
 
 type NonEnterKey = Exclude<React.KeyboardEvent<HTMLInputElement>['key'], 'Enter'>
 
@@ -64,6 +65,7 @@ const Input = forwardRef<InputRefProps, InputProps>(({
 }, ref) => {
     const inputRef = useRef<HTMLInputElement>(null)
     const { inputStore } = useContainerContext()
+    const {setValue, setOptions, arrAction} = useFormHelpers()
     const { labelMode } = useFormLayout()
     const value: string | number = fixedValue ?? useInputStore(name, inputStore) ?? ""
     const handlePreInput = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -104,32 +106,32 @@ const Input = forwardRef<InputRefProps, InputProps>(({
     //     }
     // }
 
-    const setValue = (FieldCredentials: FieldProps) => {
-        const keys = Object.keys(FieldCredentials);
-        for (const key of keys) {
-            const value = FieldCredentials[key]
-            if (isArray(value)) {
-                // inputStore.setSilentValue(key, value)
-                inputStore.replaceArray(key, value)
-            }
-            else {
-                inputStore.setValue(key, FieldCredentials[key])
-            }
-        }
-    }
+    // const setValue = (FieldCredentials: FieldProps) => {
+    //     const keys = Object.keys(FieldCredentials);
+    //     for (const key of keys) {
+    //         const value = FieldCredentials[key]
+    //         if (isArray(value)) {
+    //             // inputStore.setSilentValue(key, value)
+    //             inputStore.replaceArray(key, value)
+    //         }
+    //         else {
+    //             inputStore.setValue(key, FieldCredentials[key])
+    //         }
+    //     }
+    // }
 
-    const arrAction = (path: string) => {
-        return {
-            add: ({ count, initialValue } = {}) => inputStore.addArrayItem(path, initialValue, count),
-            remove: (index) => inputStore.removeArrayItem(path, index),
-            pop: () => inputStore.popArrayItem(path),
-        } as ArrayHelpers
-    }
+    // const arrAction = (path: string) => {
+    //     return {
+    //         add: ({ count, initialValue } = {}) => inputStore.addArrayItem(path, initialValue, count),
+    //         remove: (index) => inputStore.removeArrayItem(path, index),
+    //         pop: () => inputStore.popArrayItem(path),
+    //     } as ArrayHelpers
+    // }
 
     const handleBlur = () => {
         inputStore.stylesStore.disable(name, FieldVisualState.Focus)
         const data = inputStore.getSnapshot().inputData
-        onBlur?.({ value: value ?? "", data: data as Record<string, any>, setValue })
+        onBlur?.({ value: value ?? "", data: data as Record<string, any>, setValue, setOptions })
     }
     const handleFocus = () => {
         inputStore.stylesStore.enable(name, FieldVisualState.Focus)
@@ -145,7 +147,8 @@ const Input = forwardRef<InputRefProps, InputProps>(({
                 data: data as Record<string, any>,
                 stopPropagation,
                 setValue,
-                submit: () => inputStore.triggerSubmit(event)
+                submit: () => inputStore.triggerSubmit(event),
+                setOptions
             })
             return
         }
@@ -153,7 +156,7 @@ const Input = forwardRef<InputRefProps, InputProps>(({
     }
 
     useEffect(() => {
-        onChange?.({ value, setValue, arrAction })
+        onChange?.({ value, setValue, arrAction, setOptions })
     }, [value])
 
     useLayoutEffect(() => {

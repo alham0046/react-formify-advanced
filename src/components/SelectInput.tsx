@@ -1,4 +1,4 @@
-import { type FC, memo, useEffect } from 'react';
+import { type FC, memo, useEffect, useRef } from 'react';
 import { useComputedExpression } from '../hooks/useComputedExpression';
 import { useFieldName } from '../hooks/useFieldName';
 import { useSelectOptions } from '../hooks/useSelectOptions';
@@ -10,6 +10,7 @@ import { handleInitialValue } from '../Utils/setInitialValue';
 import { useStyles } from '../hooks/useStylingMods';
 import { SelectProps } from '../typeDeclaration/dropdownProps';
 import { FieldProps } from '@/typeDeclaration/baseProps';
+import { useFormHelpers } from '@/hooks/useFormActions';
 
 const SelectInput: FC<SelectProps> = ({
     name,
@@ -30,12 +31,31 @@ const SelectInput: FC<SelectProps> = ({
     style,
 }) => {
     const {inputStore, modalContainerRef} = useContainerContext()
+
+    const {setOptions, setValue} = useFormHelpers()
     
     const modifiedName = useFieldName(placeholder, name)
 
-    useEffect(() => {
-            handleInitialValue(modifiedName, initialValue, inputStore)
-        }, [])
+    const hasRendered = useRef<boolean>(false)
+    if (!hasRendered.current) {
+        // handleInitialValue(modifiedName, initialValue, inputStore)
+        const existingValue = inputStore.getValue(modifiedName);
+        const pendingValue = inputStore.getPendingInitialData(modifiedName)
+        const value = existingValue || (initialValue ?? pendingValue)
+        inputStore.optionGraph.register(modifiedName, {
+            options,
+            dependsOn,
+            initialSelected: value,
+            mapFn: optionsMap
+              ? (dep, base) => optionsMap[dep] ?? []
+              : undefined
+        })
+        hasRendered.current = true
+    }
+
+    // useEffect(() => {
+    //         handleInitialValue(modifiedName, initialValue, inputStore)
+    //     }, [])
 
     const disabledValue: boolean = useComputedExpression(disabled, modifiedName)
 
@@ -45,12 +65,12 @@ const SelectInput: FC<SelectProps> = ({
     
     const {boxWidth, containerStyles} = resolvedStyle
 
-    const setValue = (FieldCredentials: FieldProps) => {
-            const keys = Object.keys(FieldCredentials);
-            for (const key of keys) {
-                inputStore.setValue(key, FieldCredentials[key])
-            }
-        }
+    // const setValue = (FieldCredentials: FieldProps) => {
+    //         const keys = Object.keys(FieldCredentials);
+    //         for (const key of keys) {
+    //             inputStore.setValue(key, FieldCredentials[key])
+    //         }
+    //     }
 
     useEffect(() => {
         if (onDisableChange) {
@@ -66,17 +86,17 @@ const SelectInput: FC<SelectProps> = ({
         }
     }, [disabledValue])
 
-    const optionObject = useSelectOptions({
-        options,
-        dependsOn,
-        optionsMap,
-        initialLabel,
-        initialValue,
-        inputStore
-    })
+    // const optionObject = useSelectOptions({
+    //     options,
+    //     dependsOn,
+    //     optionsMap,
+    //     initialLabel,
+    //     initialValue,
+    //     inputStore
+    // })
 
     const handleSelect = (selectedValue: string) => {
-        onChange?.({value: selectedValue, setValue});
+        onChange?.({value: selectedValue, setValue, setOptions});
         inputStore.setValue(modifiedName, selectedValue);
     };
 
@@ -97,7 +117,7 @@ const SelectInput: FC<SelectProps> = ({
                 >
                     <DropdownModal
                         onSelect={handleSelect}
-                        options={optionObject}
+                        // options={optionObject}
                         name={modifiedName}
                         style={resolvedStyle}
                         twStyle={tw}

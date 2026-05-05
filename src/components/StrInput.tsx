@@ -1,4 +1,4 @@
-import { forwardRef, memo, useEffect } from "react";
+import { forwardRef, memo, useEffect, useRef } from "react";
 import { type InputProps, type InputRefProps } from "../typeDeclaration/inputProps";
 import { useComputedExpression } from "../hooks/useComputedExpression";
 import InputTemplate from "./InputTemplate";
@@ -13,9 +13,14 @@ const StrInput = forwardRef<InputRefProps, InputProps>(({...props}, ref) => {
     const {placeholder, name,children,style,twStyle, initialValue="",required=false, disabled=false, hideElement=false, privacy=false, ...rest} = props
     const {inputStore} = useContainerContext()
     const modifiedName = useFieldName(placeholder, name)
-    useEffect(() => {
+    const hasRendered = useRef<boolean>(false)
+    if (!hasRendered.current) {
         handleInitialValue(modifiedName, initialValue, inputStore)
-    }, [])
+        hasRendered.current = true
+    }
+    // useEffect(() => {
+    //     handleInitialValue(modifiedName, initialValue, inputStore)
+    // }, [])
 
     useEffect(() => {
         inputStore.validatorStore.register(modifiedName, {required, validators: []})

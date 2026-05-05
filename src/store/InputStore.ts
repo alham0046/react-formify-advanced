@@ -4,6 +4,7 @@ import { InputStyles } from "./InputStyles";
 import { isIndex } from "../Utils/inputStoreUtils";
 import { Validator } from "./validatorStore";
 import { ComputedStore } from "./computedStore";
+import { OptionGraph } from "./OptionGraph";
 
 type Listener = () => void
 
@@ -16,11 +17,13 @@ export class InputStore {
   private styles: InputStyles
   private validator: Validator
   private computedStore: ComputedStore
+  optionGraph : OptionGraph
 
   constructor(formId: string) {
     this.formId = formId
     this.styles = new InputStyles()
     this.validator = new Validator()
+    this.optionGraph = new OptionGraph(this)
     this.computedStore = new ComputedStore(
       () => this.state.inputData
     )
@@ -254,6 +257,11 @@ export class InputStore {
     if (!inputData) return
     const prev = this.getNestedValue(inputData, key)
     if (prev === value) return
+    const isDropdown = this.optionGraph.hasPath(key)
+    if (isDropdown) {
+      const isValid = this.optionGraph.doOptionExist(key, value)
+      if (!isValid) return
+    }
     this.setNestedValue(inputData, key, value)
     this.notify(key)
     // if (!this.isEditMode) return

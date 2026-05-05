@@ -53,6 +53,11 @@ interface TWInputStyleProp {
     twContainerStyles: string;
 }
 
+interface DropdownOption {
+    label: string;
+    value: string;
+}
+
 interface BaseInputProps<T = {}, U = {}> {
     placeholder: string;
     children?: React.ReactNode;
@@ -77,6 +82,7 @@ interface OnInputChangeArgs {
     value: string | number;
     setValue: (field: FieldProps) => void;
     arrAction?: (path: string) => ArrayHelpers;
+    setOptions: (name: string, options: string[] | DropdownOption[], initialValue?: string) => void;
 }
 type OnInputChange = (args: OnInputChangeArgs) => void;
 interface onEnterPressArgs extends OnInputChangeArgs {
@@ -143,9 +149,7 @@ interface SelectProps extends BaseInputProps<TWDropdownStyleProp, DropdownStyleP
     searchable?: boolean;
     onToggleDropdown?: (isOpen: boolean) => void;
 }
-interface OptionMap {
-    [key: string]: string[];
-}
+type OptionMap = Record<string, DropdownOption[]>;
 interface SelectOption {
     label: string;
     value: string;

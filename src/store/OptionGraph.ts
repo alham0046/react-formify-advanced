@@ -57,7 +57,7 @@ export class OptionGraph {
     }
 
     this.nodes.set(path, node)
-    
+
     this.inputStore.setFieldInitialData(path, config.initialSelected || "")
     // 🔥 subscribe to dependency
     if (config.dependsOn) {
@@ -70,7 +70,7 @@ export class OptionGraph {
   // ----------------------------
   // Set options dynamically
   // ----------------------------
-  set(path: string, options: DropdownOption[] | string[], initialSelected?: string) {
+  set(path: string, options: DropdownOption[] | string[], initialSelected: string = "") {
     const node = this.nodes.get(path)
     if (!node) return
 
@@ -79,9 +79,7 @@ export class OptionGraph {
     node.baseOptions = normalized
     node.valueToLabel = this.createLabelMap(normalized)
 
-    if (initialSelected) {
-      this.inputStore.setValue(path, initialSelected)
-    }
+    this.inputStore.setValue(path, initialSelected)
 
 
     this.recompute(path)
@@ -147,7 +145,7 @@ export class OptionGraph {
     // return this.nodes.get(path)?.valueToLabel.get(value)
   }
 
-  getNode(key : string) {
+  getNode(key: string) {
     return this.nodes.get(key)
   }
 

@@ -86,17 +86,18 @@ const SelectInput: FC<SelectProps> = ({
         }
     }, [disabledValue])
 
-    // const optionObject = useSelectOptions({
-    //     options,
-    //     dependsOn,
-    //     optionsMap,
-    //     initialLabel,
-    //     initialValue,
-    //     inputStore
-    // })
+    useEffect(() => {
+      if (!onChange) return
+        
+      const unsubscribe = inputStore.subscribeToValue(modifiedName, (value) => {
+        onChange({ value, setValue, setOptions })
+      })
+  
+      return unsubscribe
+    }, [onChange])
 
     const handleSelect = (selectedValue: string) => {
-        onChange?.({value: selectedValue, setValue, setOptions});
+        // onChange?.({value: selectedValue, setValue, setOptions});
         inputStore.setValue(modifiedName, selectedValue);
     };
 

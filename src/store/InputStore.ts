@@ -109,6 +109,8 @@ export class InputStore {
 
   private listeners = new Map<string, Set<Listener>>()     /////// can fix this. can do new Map<string, Listener>() instead.
 
+  private changeListeners = new Map<string, Set<(value: any) => void>>()
+
   subscribe(key: string, listener: Listener) {
     if (!this.listeners.has(key)) {
       this.listeners.set(key, new Set())
@@ -118,6 +120,18 @@ export class InputStore {
 
     return () => {
       this.listeners.get(key)?.delete(listener)
+    }
+  }
+
+  subscribeToValue(path: string, cb: (value: any) => void) {
+    if (!this.changeListeners.has(path)) {
+      this.changeListeners.set(path, new Set())
+    }
+
+    this.changeListeners.get(path)!.add(cb)
+
+    return () => {
+      this.changeListeners.get(path)?.delete(cb)
     }
   }
 
@@ -265,6 +279,7 @@ export class InputStore {
     if (prev === nextValue) return
     this.setNestedValue(inputData, key, nextValue)
     this.notify(key)
+    this.changeListeners.get(key)?.forEach(cb => cb(nextValue))
     // if (!this.isEditMode) return
     if (this.isEditMode) {
       const initial = this.getNestedValue(this.state.initialData, key)

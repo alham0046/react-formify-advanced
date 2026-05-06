@@ -147,13 +147,17 @@ export class OptionGraph {
     // return this.nodes.get(path)?.valueToLabel.get(value)
   }
 
+  getNode(key : string) {
+    return this.nodes.get(key)
+  }
+
   hasPath(path: string) {
     return this.nodes.has(path)
   }
 
   doOptionExist(path: string, value: string) {
     const node = this.nodes.get(path)
-    if (!node) return false
+    if (!node) return 1
     return node.valueToLabel.has(value)
   }
 

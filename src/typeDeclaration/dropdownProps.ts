@@ -6,7 +6,7 @@ export interface SelectProps extends BaseInputProps<TWDropdownStyleProp, Dropdow
     /** NEW — generic dependent dropdown system */
     dependsOn?: string;
     optionsMap?: OptionMap;
-    options: SelectOption[] | string[]
+    options?: SelectOption[] | string[]
     initialLabel?: string
     searchable?: boolean
     onToggleDropdown?: (isOpen: boolean) => void

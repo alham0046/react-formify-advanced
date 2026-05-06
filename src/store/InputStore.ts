@@ -17,7 +17,7 @@ export class InputStore {
   private styles: InputStyles
   private validator: Validator
   private computedStore: ComputedStore
-  optionGraph : OptionGraph
+  optionGraph: OptionGraph
 
   constructor(formId: string) {
     this.formId = formId
@@ -256,20 +256,21 @@ export class InputStore {
     const inputData = this.state.inputData
     if (!inputData) return
     const prev = this.getNestedValue(inputData, key)
-    if (prev === value) return
-    const isDropdown = this.optionGraph.hasPath(key)
-    if (isDropdown) {
-      const isValid = this.optionGraph.doOptionExist(key, value)
-      if (!isValid) return
-    }
-    this.setNestedValue(inputData, key, value)
+    let nextValue = value
+    // const isDropdown = this.optionGraph.hasPath(key)
+    // if (isDropdown) {
+    // }
+    const isValid = this.optionGraph.doOptionExist(key, value)
+    if (!isValid) nextValue = ""
+    if (prev === nextValue) return
+    this.setNestedValue(inputData, key, nextValue)
     this.notify(key)
     // if (!this.isEditMode) return
     if (this.isEditMode) {
       const initial = this.getNestedValue(this.state.initialData, key)
-      if (initial === undefined) this.setNestedValue(this.state.initialData, key, value)
+      if (initial === undefined) this.setNestedValue(this.state.initialData, key, nextValue)
       const wasEdited = this.state.editedKeys.has(key)
-      const isEdited = value !== initial
+      const isEdited = nextValue !== initial
       if (isEdited) {
         this.state.editedKeys.add(key)
       }
@@ -285,7 +286,7 @@ export class InputStore {
 
     const error = this.validator.validateField(
       key,
-      value,
+      nextValue,
       inputData
     )
 

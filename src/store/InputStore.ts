@@ -123,12 +123,17 @@ export class InputStore {
     }
   }
 
-  subscribeToValue(path: string, cb: (value: any) => void) {
+  subscribeToValue(path: string, cb: (value: any) => void, shouldNotify: boolean = true) {
     if (!this.changeListeners.has(path)) {
       this.changeListeners.set(path, new Set())
     }
 
     this.changeListeners.get(path)!.add(cb)
+
+    if (shouldNotify) {
+      const value = this.getValue(path)
+      if (value) cb(value)
+    }
 
     return () => {
       this.changeListeners.get(path)?.delete(cb)

@@ -254,6 +254,9 @@ export class InputStore {
     }
     this.currentValue = value
     this.notify(key)
+    if (value) {
+      this.changeListeners.get(key)?.forEach(cb => cb(value))
+    }
   }
 
   /* ---------------- REGISTER COMPUTED ---------------- */

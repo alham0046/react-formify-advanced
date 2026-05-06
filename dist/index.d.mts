@@ -284,7 +284,10 @@ declare class SharedMemory {
     private storage;
     get(key?: string): any;
     set(key: string, value: any): void;
-    addMany(data: Record<string, any>): void;
+    setMany(data: Record<string, any>): void;
+    add(key: string, value: Record<string, any>): void;
+    push(key: string, value: any[]): void;
+    update(key: string, updater: (prev: any) => any): void;
     remove(key: string): void;
     clear(): void;
 }

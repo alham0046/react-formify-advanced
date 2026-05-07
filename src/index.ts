@@ -8,6 +8,7 @@ export { default as SelectInput } from './components/SelectInput'
 export { default as AutoInput } from './components/AutoInput'
 export { default as DateInput } from './components/DateInput'
 export { default as DisabledInput } from './components/DisabledInput';
+export { default as InputSection } from './components/InputSection'
 export { default as RunningText } from './components/RunningText'
 export { default as FormRow } from './components/FormRow';
 export { default as SearchInput } from './components/SearchInput'

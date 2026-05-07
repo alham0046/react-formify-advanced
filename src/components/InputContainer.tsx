@@ -123,6 +123,7 @@ const InputContainer: FC<InputContainerProps> = ({ children, className, style, f
   return (
     <ContainerContext.Provider value={contextValue}>
       <div
+        data-input-container
         ref={containerRef}
         style={style}
         className={className}

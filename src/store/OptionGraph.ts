@@ -47,6 +47,8 @@ export class OptionGraph {
   }) {
     const normalized = this.normalize(config.options || [])
 
+    const valueSet = new Set<string>(normalized.map(opt => opt.value))
+
     const node: OptionNode = {
       baseOptions: normalized,
       derivedOptions: normalized,
@@ -58,7 +60,15 @@ export class OptionGraph {
 
     this.nodes.set(path, node)
 
-    this.inputStore.setFieldInitialData(path, config.initialSelected || "")
+    const initialSelected = config.initialSelected
+
+    let initialValue = ""
+
+    if (initialSelected && valueSet.has(initialSelected)) {
+      initialValue = initialSelected
+    }
+
+    this.inputStore.setFieldInitialData(path, initialValue)
     // 🔥 subscribe to dependency
     if (config.dependsOn) {
       this.inputStore.subscribe(config.dependsOn, () => {

@@ -41,7 +41,9 @@ const SelectInput: FC<SelectProps> = ({
         // handleInitialValue(modifiedName, initialValue, inputStore)
         const existingValue = inputStore.getValue(modifiedName);
         const pendingValue = inputStore.getPendingInitialData(modifiedName)
-        const value = existingValue || (initialValue ?? pendingValue)
+        // const value = existingValue || (initialValue ?? pendingValue)
+        const value = [existingValue, initialValue, pendingValue]
+            .find(v => v !== "" && v !== undefined && v !== null) ?? "";
         inputStore.optionGraph.register(modifiedName, {
             options,
             dependsOn,

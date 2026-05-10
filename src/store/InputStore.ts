@@ -188,7 +188,7 @@ export class InputStore {
     this.state.inputData = {}
     if (mode === "edit") this.isEditMode = true
     if (isEmptyObject(initialData)) return
-    console.log("initializing input store", initialData)
+    // console.log("initializing input store", initialData)
     this.pendingInitialData = new Map(Object.entries(initialData))
   }
 

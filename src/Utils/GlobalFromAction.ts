@@ -1,7 +1,7 @@
 import { getOrCreateFormStore } from "../store/InputStoreRegistry";
 import type { FieldProps } from "../typeDeclaration/baseProps";
 
-export const setEditData = (formId: string, data: Record<string, any>) => {
+export const setInitialData = (formId: string, data: Record<string, any>) => {
     const inputStore = getOrCreateFormStore(formId)
     inputStore.setEditData(data)
 }
@@ -27,7 +27,7 @@ export const clearForm = (formId: string) => {
 export const formGlobalAction = (formId: string) => {
     const inputStore = getOrCreateFormStore(formId)
     return {
-        setEditData: (data: Record<string, any>) => inputStore?.setEditData(data),
+        setInitialData: (data: Record<string, any>) => inputStore?.setEditData(data),
         setValue: (FieldCredentials: FieldProps) => {
             const keys = Object.keys(FieldCredentials);
             for (const key of keys) {

@@ -121,6 +121,7 @@ interface InputRefProps {
     focus: () => void;
     blur: () => void;
     reset: () => void;
+    position: () => DOMRect | undefined;
 }
 type Year = `${number}${number}${number}${number}`;
 type Month = `0${1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9}` | `1${0 | 1 | 2}`;
@@ -298,12 +299,12 @@ declare class SharedMemory {
 }
 declare const sharedMemory: SharedMemory;
 
-declare const setEditData: (formId: string, data: Record<string, any>) => void;
+declare const setInitialData: (formId: string, data: Record<string, any>) => void;
 declare const setFieldValue: (formId: string, FieldCredentials: FieldProps) => void;
 declare const resetForm: (formId: string, key?: string[] | string) => void;
 declare const clearForm: (formId: string) => void;
 declare const formGlobalAction: (formId: string) => {
-    setEditData: (data: Record<string, any>) => void;
+    setInitialData: (data: Record<string, any>) => void;
     setValue: (FieldCredentials: FieldProps) => void;
     resetForm: (key?: string[] | string) => void;
     clearForm: () => void;
@@ -315,4 +316,4 @@ declare const useFormActions: () => {
     reset: () => void;
 };
 
-export { _default$5 as ArrayContainer, MemoizedAutoInput as AutoInput, type ConfirmationRenderProps, memoizedDateInput as DateInput, MemoizedDisabledInput as DisabledInput, _default$2 as FormRow, _default as InputContainer, _default$4 as InputSection, MemoizedNumInput as NumInput, MemoizedObjectContainer as ObjectContainer, type OnBlur, type OnBlurArgs, type OnEnterPress, type OnInputChange, type OnInputChangeArgs, type OnSubmit, type OnSubmitArgs, _default$3 as RunningText, _default$1 as SearchInput, MemoizedSelectInput as SelectInput, MemoizedStrInput as StrInput, MemoizedSubmitButton as SubmitButton, type SubmitButtonRef, clearForm, formGlobalAction, type onEnterPressArgs, resetForm, setEditData, setFieldValue, sharedMemory, useFormActions };
+export { _default$5 as ArrayContainer, MemoizedAutoInput as AutoInput, type ConfirmationRenderProps, memoizedDateInput as DateInput, MemoizedDisabledInput as DisabledInput, _default$2 as FormRow, _default as InputContainer, _default$4 as InputSection, MemoizedNumInput as NumInput, MemoizedObjectContainer as ObjectContainer, type OnBlur, type OnBlurArgs, type OnEnterPress, type OnInputChange, type OnInputChangeArgs, type OnSubmit, type OnSubmitArgs, _default$3 as RunningText, _default$1 as SearchInput, MemoizedSelectInput as SelectInput, MemoizedStrInput as StrInput, MemoizedSubmitButton as SubmitButton, type SubmitButtonRef, clearForm, formGlobalAction, type onEnterPressArgs, resetForm, setFieldValue, setInitialData, sharedMemory, useFormActions };

@@ -65,7 +65,7 @@ const Input = forwardRef<InputRefProps, InputProps>(({
 }, ref) => {
     const inputRef = useRef<HTMLInputElement>(null)
     const { inputStore } = useContainerContext()
-    const {setValue, setOptions, arrAction} = useFormHelpers()
+    const { setValue, setOptions, arrAction } = useFormHelpers()
     const { labelMode } = useFormLayout()
     const value: string | number = fixedValue ?? useInputStore(name, inputStore) ?? ""
     const handlePreInput = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -94,39 +94,20 @@ const Input = forwardRef<InputRefProps, InputProps>(({
         reset: () => {
             inputStore.reset(name)
         },
+        // disable: () => {
+        //     if (inputRef.current) {
+        //         inputRef.current.disabled = true;
+        //     }
+        // },
+        // enable: () => {
+        //     if (inputRef.current) {
+        //         inputRef.current.disabled = false;
+        //     }
+        // },
         position: () => {
             return inputRef.current?.getBoundingClientRect()
         }
     }))
-
-    // const setValue = (FieldCredentials: FieldProps) => {
-    //     const keys = Object.keys(FieldCredentials);
-    //     for (const key of keys) {
-    //         inputStore.setValue(key, FieldCredentials[key])
-    //     }
-    // }
-
-    // const setValue = (FieldCredentials: FieldProps) => {
-    //     const keys = Object.keys(FieldCredentials);
-    //     for (const key of keys) {
-    //         const value = FieldCredentials[key]
-    //         if (isArray(value)) {
-    //             // inputStore.setSilentValue(key, value)
-    //             inputStore.replaceArray(key, value)
-    //         }
-    //         else {
-    //             inputStore.setValue(key, FieldCredentials[key])
-    //         }
-    //     }
-    // }
-
-    // const arrAction = (path: string) => {
-    //     return {
-    //         add: ({ count, initialValue } = {}) => inputStore.addArrayItem(path, initialValue, count),
-    //         remove: (index) => inputStore.removeArrayItem(path, index),
-    //         pop: () => inputStore.popArrayItem(path),
-    //     } as ArrayHelpers
-    // }
 
     const handleBlur = () => {
         inputStore.stylesStore.disable(name, FieldVisualState.Focus)

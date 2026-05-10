@@ -17,5 +17,5 @@ export { default as InputContainer } from './components/InputContainer';
 export type { OnSubmit, OnSubmitArgs } from './typeDeclaration/inputProps'
 export type { OnBlur, OnEnterPress, OnInputChange, OnBlurArgs, OnInputChangeArgs, onEnterPressArgs } from './typeDeclaration/baseProps'
 export { sharedMemory } from './store/sharedMemory'
-export { clearForm, formGlobalAction, resetForm, setEditData, setFieldValue } from './Utils/GlobalFromAction'
+export { clearForm, formGlobalAction, resetForm, setInitialData, setFieldValue } from './Utils/GlobalFromAction'
 export { useFormActions } from './hooks/useFormActions'

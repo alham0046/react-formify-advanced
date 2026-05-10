@@ -30,6 +30,9 @@ export interface InputRefProps {
     focus: () => void
     blur: () => void
     reset: () => void
+    // disable: () => void
+    // enable: () => void
+    position: () => DOMRect | undefined
 }
 
 
